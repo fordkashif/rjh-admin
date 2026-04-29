@@ -23,6 +23,20 @@ export async function grantHotelStaffAccess({ hotelId, email, role }) {
     throw error;
   }
 
+  const { data: emailData, error: emailError } = await supabase.functions.invoke("send-staff-access-email", {
+    body: {
+      hotelId,
+      email,
+      role,
+    },
+  });
+
+  if (emailError) {
+    console.error("Staff access email function failed", emailError);
+  } else if (emailData?.ok === false) {
+    console.error("Staff access email delivery reported a handled failure", emailData);
+  }
+
   return data ?? [];
 }
 
