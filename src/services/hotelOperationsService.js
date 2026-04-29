@@ -134,6 +134,28 @@ async function syncRoomTypeGallery({ roomTypeId, galleryImages = [] }) {
   }
 }
 
+async function sendReservationStatusEmail({ reservationDbId, nextStatus, trigger }) {
+  const { data, error } = await supabase.functions.invoke("send-reservation-status-email", {
+    body: {
+      reservationId: reservationDbId,
+      nextStatus,
+      trigger,
+    },
+  });
+
+  if (error) {
+    console.error("Reservation status email function failed", error);
+    return { ok: false, error };
+  }
+
+  if (data?.ok === false) {
+    console.error("Reservation status email delivery reported a handled failure", data);
+    return { ok: false, error: data };
+  }
+
+  return { ok: true, data };
+}
+
 export async function fetchHotelOperationsSnapshot() {
   requireConfiguredOperationsClient();
 
@@ -356,6 +378,14 @@ export async function updateReservationStatus({ reservationId, nextStatus }) {
     throw auditError;
   }
 
+  if (["confirmed", "cancelled"].includes(String(nextStatus ?? "").toLowerCase())) {
+    await sendReservationStatusEmail({
+      reservationDbId: reservationRow.id,
+      nextStatus,
+      trigger: "status_update",
+    });
+  }
+
   return { source: "supabase", reservationId, nextStatus };
 }
 
@@ -491,6 +521,14 @@ export async function createReservationRecord(payload) {
     await assignReservationRoom({ reservationId: reservationRow.request_reference, roomId: payload.assignedRoomId });
   }
 
+  if (["confirmed", "cancelled"].includes(String(payload.status || "confirmed").toLowerCase())) {
+    await sendReservationStatusEmail({
+      reservationDbId: reservationRow.id,
+      nextStatus: payload.status || "confirmed",
+      trigger: "admin_created",
+    });
+  }
+
   return {
     source: "supabase",
     reservationId: reservationRow.request_reference,
@@ -567,6 +605,17 @@ export async function updateReservationRecord({ reservationId, updates }) {
     if (clearAssignmentError) {
       throw clearAssignmentError;
     }
+  }
+
+  if (
+    reservationRow.status !== updates.status &&
+    ["confirmed", "cancelled"].includes(String(updates.status ?? "").toLowerCase())
+  ) {
+    await sendReservationStatusEmail({
+      reservationDbId: reservationRow.id,
+      nextStatus: updates.status,
+      trigger: "record_update",
+    });
   }
 
   return { source: "supabase", reservationId };
