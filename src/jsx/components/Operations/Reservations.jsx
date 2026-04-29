@@ -46,6 +46,7 @@ export default function ReservationsPage() {
     createReservation,
     editReservation,
     deleteReservation,
+    loadState,
   } = useHotelContext();
   const [statusFilter, setStatusFilter] = useState("all");
   const [isReservationModalOpen, setIsReservationModalOpen] = useState(false);
@@ -208,12 +209,20 @@ export default function ReservationsPage() {
     return [];
   }
 
+  if (loadState.status === "loading") {
+    return <div className="alert alert-info">Loading reservations...</div>;
+  }
+
+  if (loadState.status === "error") {
+    return <div className="alert alert-warning">{loadState.error || "Reservations could not be loaded right now."}</div>;
+  }
+
   return (
     <div className="card">
       <div className="card-header border-0 pb-0 d-flex flex-wrap justify-content-between gap-3">
         <div>
           <h4 className="card-title mb-1">Reservations</h4>
-          <p className="mb-0">Front desk can create, edit, cancel, assign, and manage reservations from one workflow.</p>
+          <p className="mb-0">Create and manage reservations, room assignments, and stay progress from one place.</p>
         </div>
         <div className="d-flex gap-2">
           <select
@@ -237,22 +246,27 @@ export default function ReservationsPage() {
       <div className="card-body">
         {actionState.status === "error" ? <div className="alert alert-warning">{actionState.error}</div> : null}
 
-        <div className="table-responsive">
-          <table className="table card-table default-table">
-            <thead>
-              <tr>
-                <th>Reference</th>
-                <th>Guest</th>
-                <th>Stay</th>
-                <th>Source</th>
-                <th>Room</th>
-                <th>Status</th>
-                <th>Total</th>
-                <th>CRUD & lifecycle</th>
-              </tr>
-            </thead>
-            <tbody>
-              {visibleReservations.map((reservation) => {
+        {visibleReservations.length === 0 ? (
+          <div className="alert alert-secondary mb-0">
+            No reservations match this filter yet.
+          </div>
+        ) : (
+          <div className="table-responsive">
+            <table className="table card-table default-table">
+              <thead>
+                <tr>
+                  <th>Reference</th>
+                  <th>Guest</th>
+                  <th>Stay</th>
+                  <th>Source</th>
+                  <th>Room</th>
+                  <th>Status</th>
+                  <th>Total</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {visibleReservations.map((reservation) => {
                 const actions = getReservationActions(reservation);
                 const isUpdating = actionState.status === "submitting" && actionState.reservationId === reservation.id;
 
@@ -323,10 +337,11 @@ export default function ReservationsPage() {
                     </td>
                   </tr>
                 );
-              })}
-            </tbody>
-          </table>
-        </div>
+                })}
+              </tbody>
+            </table>
+          </div>
+        )}
       </div>
       <Modal show={isReservationModalOpen} onHide={resetForm} size="lg" centered>
         <form onSubmit={handleFormSubmit}>

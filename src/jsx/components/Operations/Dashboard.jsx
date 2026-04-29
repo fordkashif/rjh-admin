@@ -18,6 +18,18 @@ const metricCards = [
 export default function OperationsDashboard() {
   const { dashboardMetrics, loadState, reservationRecords, roomRecords, selectedHotel } = useHotelContext();
 
+  if (loadState.status === "loading") {
+    return <div className="alert alert-info">Preparing your hotel dashboard...</div>;
+  }
+
+  if (loadState.status === "error") {
+    return <div className="alert alert-warning">{loadState.error || "The dashboard could not be loaded right now."}</div>;
+  }
+
+  if (!selectedHotel?.id) {
+    return <div className="alert alert-secondary">No hotel has been assigned to this account yet.</div>;
+  }
+
   const upcomingReservations = reservationRecords
     .filter((reservation) => reservation.status === "confirmed" || reservation.status === "pending")
     .sort((left, right) => left.checkIn.localeCompare(right.checkIn))
@@ -30,14 +42,6 @@ export default function OperationsDashboard() {
 
   return (
     <>
-      {loadState.status === "loading" ? (
-        <div className="alert alert-info">Loading hotel operations data...</div>
-      ) : null}
-      {loadState.status === "error" ? (
-        <div className="alert alert-warning">
-          Supabase data could not be loaded, so the admin is using local fallback data for now.
-        </div>
-      ) : null}
       <div className="row">
         {metricCards.map((card) => (
           <div className="col-xl-3 col-sm-6" key={card.key}>
@@ -60,8 +64,7 @@ export default function OperationsDashboard() {
               <div>
                 <h4 className="card-title mb-1">Property Snapshot</h4>
                 <p className="mb-0">
-                  {selectedHotel.name} manages direct bookings from {selectedHotel.websiteUrl} and can
-                  share the same admin with sister properties.
+                  A quick view of arrivals, revenue, and room activity for {selectedHotel.name}.
                 </p>
               </div>
             </div>
@@ -71,7 +74,7 @@ export default function OperationsDashboard() {
                   <div className="border rounded p-3 h-100">
                     <h5 className="mb-3">Revenue in pipeline</h5>
                     <h2 className="mb-2">{formatCurrency(dashboardMetrics.upcomingRevenue)}</h2>
-                    <span className="text-muted">Confirmed and in-house reservation value</span>
+                    <span className="text-muted">Confirmed and in-house booking value</span>
                   </div>
                 </div>
                 <div className="col-md-6 mb-4">
@@ -100,7 +103,7 @@ export default function OperationsDashboard() {
                     <div className="col-sm-6 col-lg-4 mb-3" key={roomType}>
                       <div className="bg-light rounded p-3 h-100">
                         <strong className="d-block">{roomType}</strong>
-                        <span className="text-muted">{count} tracked room{count === 1 ? "" : "s"}</span>
+                        <span className="text-muted">{count} room{count === 1 ? "" : "s"}</span>
                       </div>
                     </div>
                   ))}
@@ -130,7 +133,7 @@ export default function OperationsDashboard() {
                   </div>
                 ))
               ) : (
-                <div className="text-muted">No upcoming arrivals are currently scheduled.</div>
+                <div className="text-muted">No upcoming arrivals are scheduled.</div>
               )}
             </div>
           </div>

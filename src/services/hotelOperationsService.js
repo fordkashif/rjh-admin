@@ -1,4 +1,3 @@
-import { guests, hotels, organizations, reservations, rooms, roomTypes } from "../data/hotelData";
 import { isSupabaseConfigured, supabase } from "./supabaseClient";
 
 function deriveGuestIdFromEmail(email) {
@@ -16,17 +15,10 @@ function sanitizeFileName(fileName) {
     .replace(/-+/g, "-");
 }
 
-function buildFallbackSnapshot() {
-  return {
-    source: "fallback",
-    organizations,
-    hotels,
-    roomTypes,
-    rooms,
-    guests,
-    reservations,
-    currentUserAccess: [],
-  };
+function requireConfiguredOperationsClient() {
+  if (!isSupabaseConfigured || !supabase) {
+    throw new Error("This workspace is not ready yet. Please check the admin connection settings.");
+  }
 }
 
 async function getCurrentUser() {
@@ -143,9 +135,7 @@ async function syncRoomTypeGallery({ roomTypeId, galleryImages = [] }) {
 }
 
 export async function fetchHotelOperationsSnapshot() {
-  if (!isSupabaseConfigured || !supabase) {
-    return buildFallbackSnapshot();
-  }
+  requireConfiguredOperationsClient();
 
   const currentUser = await getCurrentUser();
   const [{ data: orgRows, error: orgError }, { data: hotelRows, error: hotelError }, { data: roomTypeRows, error: roomTypeError }, { data: roomTypeGalleryRows, error: roomTypeGalleryError }, { data: roomRows, error: roomError }, { data: reservationRows, error: reservationError }, { data: guestRows, error: guestError }, { data: guestProfileRows, error: guestProfileError }, { data: userAccessRows, error: userAccessError }] =
@@ -193,7 +183,7 @@ export async function fetchHotelOperationsSnapshot() {
         email: item.email,
         phone: item.phone,
         loyaltyTier: "Unknown",
-        preferredChannel: "Supabase",
+        preferredChannel: "Direct",
         notes: "",
         createdAt: item.created_at,
       });
@@ -317,9 +307,7 @@ function getRoomStatusForReservationStatus(status, currentRoomStatus) {
 }
 
 export async function updateReservationStatus({ reservationId, nextStatus }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", reservationId, nextStatus };
-  }
+  requireConfiguredOperationsClient();
 
   const reservationRow = await resolveReservationRowByReference(reservationId);
 
@@ -372,9 +360,7 @@ export async function updateReservationStatus({ reservationId, nextStatus }) {
 }
 
 export async function assignReservationRoom({ reservationId, roomId }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", reservationId, roomId };
-  }
+  requireConfiguredOperationsClient();
 
   const reservationRow = await resolveReservationRowByReference(reservationId);
 
@@ -419,9 +405,7 @@ export async function assignReservationRoom({ reservationId, roomId }) {
 }
 
 export async function createReservationRecord(payload) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", payload };
-  }
+  requireConfiguredOperationsClient();
 
   const roomTypeCode = payload.roomTypeCode;
   const requestReference = `ADM-${Date.now()}`;
@@ -514,9 +498,7 @@ export async function createReservationRecord(payload) {
 }
 
 export async function updateReservationRecord({ reservationId, updates }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", reservationId, updates };
-  }
+  requireConfiguredOperationsClient();
 
   const reservationRow = await resolveReservationRowByReference(reservationId);
 
@@ -591,9 +573,7 @@ export async function updateReservationRecord({ reservationId, updates }) {
 }
 
 export async function deleteReservationRecord({ reservationId }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", reservationId };
-  }
+  requireConfiguredOperationsClient();
 
   const reservationRow = await resolveReservationRowByReference(reservationId);
 
@@ -606,9 +586,7 @@ export async function deleteReservationRecord({ reservationId }) {
 }
 
 export async function createGuestProfileRecord(payload) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", payload };
-  }
+  requireConfiguredOperationsClient();
 
   await syncGuestProfile({
     hotelId: payload.hotelId,
@@ -624,9 +602,7 @@ export async function createGuestProfileRecord(payload) {
 }
 
 export async function updateGuestProfileRecord({ guestId, updates }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", guestId, updates };
-  }
+  requireConfiguredOperationsClient();
 
   const { error } = await supabase
     .from("guest_profiles")
@@ -648,9 +624,7 @@ export async function updateGuestProfileRecord({ guestId, updates }) {
 }
 
 export async function deleteGuestProfileRecord({ guestId }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", guestId };
-  }
+  requireConfiguredOperationsClient();
 
   const { error } = await supabase.from("guest_profiles").delete().eq("id", guestId);
   if (error) {
@@ -661,9 +635,7 @@ export async function deleteGuestProfileRecord({ guestId }) {
 }
 
 export async function createRoomTypeRecord(payload) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", payload, roomTypeId: null };
-  }
+  requireConfiguredOperationsClient();
 
   const { data, error } = await supabase.from("room_types").insert({
     hotel_id: payload.hotelId,
@@ -695,9 +667,7 @@ export async function createRoomTypeRecord(payload) {
 }
 
 export async function uploadRoomTypeMedia({ hotelId, roomTypeId, files, kind = "gallery" }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", uploadedImages: [] };
-  }
+  requireConfiguredOperationsClient();
 
   const uploadTargets = Array.from(files ?? []).filter(Boolean);
   if (!uploadTargets.length) {
@@ -732,9 +702,7 @@ export async function uploadRoomTypeMedia({ hotelId, roomTypeId, files, kind = "
 }
 
 export async function updateRoomTypeRecord({ roomTypeId, updates }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", roomTypeId, updates };
-  }
+  requireConfiguredOperationsClient();
 
   const { error } = await supabase
     .from("room_types")
@@ -768,9 +736,7 @@ export async function updateRoomTypeRecord({ roomTypeId, updates }) {
 }
 
 export async function deleteRoomTypeRecord({ roomTypeId }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", roomTypeId };
-  }
+  requireConfiguredOperationsClient();
 
   const { error } = await supabase.from("room_types").delete().eq("id", roomTypeId);
   if (error) {
@@ -781,9 +747,7 @@ export async function deleteRoomTypeRecord({ roomTypeId }) {
 }
 
 export async function createRoomRecord(payload) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", payload };
-  }
+  requireConfiguredOperationsClient();
 
   const { error } = await supabase.from("rooms").insert({
     hotel_id: payload.hotelId,
@@ -803,9 +767,7 @@ export async function createRoomRecord(payload) {
 }
 
 export async function updateRoomRecord({ roomId, updates }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", roomId, updates };
-  }
+  requireConfiguredOperationsClient();
 
   const { error } = await supabase
     .from("rooms")
@@ -827,9 +789,7 @@ export async function updateRoomRecord({ roomId, updates }) {
 }
 
 export async function deleteRoomRecord({ roomId }) {
-  if (!isSupabaseConfigured || !supabase) {
-    return { source: "fallback", roomId };
-  }
+  requireConfiguredOperationsClient();
 
   const { error } = await supabase.from("rooms").delete().eq("id", roomId);
   if (error) {

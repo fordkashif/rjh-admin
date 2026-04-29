@@ -1,5 +1,4 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
-import { guests, hotels, organizations, reservations, rooms, roomTypes } from "../data/hotelData";
 import {
   assignReservationRoom,
   createGuestProfileRecord,
@@ -20,7 +19,34 @@ import {
 } from "../services/hotelOperationsService";
 
 const HOTEL_STORAGE_KEY = "innap:selectedHotelId";
-const FALLBACK_ROLE = "owner";
+const EMPTY_DATA_SOURCE = {
+  organizations: [],
+  hotels: [],
+  roomTypes: [],
+  rooms: [],
+  guests: [],
+  reservations: [],
+  currentUserAccess: [],
+};
+
+const EMPTY_HOTEL = {
+  id: "",
+  organizationId: "",
+  name: "",
+  shortName: "",
+  city: "",
+  country: "",
+  code: "",
+  websiteLabel: "",
+  websiteUrl: "",
+  timezone: "",
+  description: "",
+};
+
+const EMPTY_ORGANIZATION = {
+  id: "",
+  name: "",
+};
 
 const HotelContext = createContext(null);
 
@@ -35,50 +61,33 @@ function isSameDate(isoDate, comparisonDate) {
 }
 
 export function HotelProvider({ children }) {
-  const [dataSource, setDataSource] = useState({
-    source: "fallback",
-      organizations,
-      hotels,
-      roomTypes,
-      rooms,
-      guests,
-      reservations,
-  });
-  const [loadState, setLoadState] = useState({ status: "idle", error: "", source: "fallback" });
+  const [dataSource, setDataSource] = useState(EMPTY_DATA_SOURCE);
+  const [loadState, setLoadState] = useState({ status: "idle", error: "" });
   const [actionState, setActionState] = useState({ status: "idle", reservationId: null, action: null, error: "" });
   const [selectedHotelId, setSelectedHotelId] = useState(() => {
     if (typeof window === "undefined") {
-      return hotels[0]?.id ?? null;
+      return null;
     }
 
-    return localStorage.getItem(HOTEL_STORAGE_KEY) ?? hotels[0]?.id ?? null;
+    return localStorage.getItem(HOTEL_STORAGE_KEY) ?? null;
   });
 
   async function loadOperationsData() {
-    setLoadState((current) => ({
-      status: "loading",
-      error: "",
-      source: current.source ?? "fallback",
-    }));
+    setLoadState({ status: "loading", error: "" });
 
     try {
       const snapshot = await fetchHotelOperationsSnapshot();
       setDataSource(snapshot);
-      setLoadState({ status: "ready", error: "", source: snapshot.source ?? "supabase" });
-    } catch (error) {
-      setDataSource({
-        source: "fallback",
-        organizations,
-        hotels,
-        roomTypes,
-        rooms,
-        guests,
-        reservations,
+      setSelectedHotelId((current) => {
+        const hasCurrentHotel = snapshot.hotels.some((hotel) => hotel.id === current);
+        return hasCurrentHotel ? current : snapshot.hotels[0]?.id ?? null;
       });
+      setLoadState({ status: "ready", error: "" });
+    } catch (error) {
+      setDataSource(EMPTY_DATA_SOURCE);
       setLoadState({
         status: "error",
-        error: error?.message ?? "Failed to load hotel operations data.",
-        source: "fallback",
+        error: error?.message ?? "The hotel workspace could not be loaded right now.",
       });
     }
   }
@@ -108,17 +117,17 @@ export function HotelProvider({ children }) {
   }, [selectedHotelId]);
 
   const selectedHotel = useMemo(
-    () => dataSource.hotels.find((hotel) => hotel.id === selectedHotelId) ?? dataSource.hotels[0],
+    () => dataSource.hotels.find((hotel) => hotel.id === selectedHotelId) ?? dataSource.hotels[0] ?? EMPTY_HOTEL,
     [dataSource.hotels, selectedHotelId],
   );
 
   const currentUserRole = useMemo(() => {
     const matchedAccess = (dataSource.currentUserAccess ?? []).find((access) => access.hotelId === selectedHotel?.id);
-    return matchedAccess?.role ?? FALLBACK_ROLE;
+    return matchedAccess?.role ?? null;
   }, [dataSource.currentUserAccess, selectedHotel]);
 
   const organization = useMemo(
-    () => dataSource.organizations.find((item) => item.id === selectedHotel?.organizationId) ?? dataSource.organizations[0],
+    () => dataSource.organizations.find((item) => item.id === selectedHotel?.organizationId) ?? dataSource.organizations[0] ?? EMPTY_ORGANIZATION,
     [dataSource.organizations, selectedHotel],
   );
 
@@ -196,8 +205,9 @@ export function HotelProvider({ children }) {
   }, [reservationRecords, roomsForHotel]);
 
   const dashboardMetrics = useMemo(() => {
-    const today = new Date("2026-04-28T12:00:00");
-    const tomorrow = new Date("2026-04-29T12:00:00");
+    const today = new Date();
+    const tomorrow = new Date(today);
+    tomorrow.setDate(tomorrow.getDate() + 1);
 
     return {
       totalReservations: reservationRecords.length,
@@ -240,49 +250,8 @@ export function HotelProvider({ children }) {
     setActionState({ status: "submitting", reservationId, action: "status", error: "" });
 
     try {
-      const result = await updateReservationStatus({ reservationId, nextStatus });
-
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          reservations: current.reservations.map((reservation) =>
-            reservation.id === reservationId
-              ? {
-                  ...reservation,
-                  status: nextStatus,
-                }
-              : reservation,
-          ),
-          rooms: current.rooms.map((room) => {
-            const reservation = current.reservations.find((item) => item.id === reservationId);
-
-            if (!reservation || room.id !== reservation.roomId) {
-              return room;
-            }
-
-            if (nextStatus === "checked_in") {
-              return { ...room, status: "occupied" };
-            }
-
-            if (nextStatus === "confirmed" || nextStatus === "pending") {
-              return { ...room, status: room.status === "occupied" ? room.status : "reserved" };
-            }
-
-            if (nextStatus === "checked_out" || nextStatus === "cancelled") {
-              return { ...room, status: "available" };
-            }
-
-            return room;
-          }),
-        }));
-        setLoadState((current) => ({
-          ...current,
-          source: "fallback",
-        }));
-      } else {
-        await loadOperationsData();
-      }
-
+      await updateReservationStatus({ reservationId, nextStatus });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId, action: "status", error: "" });
     } catch (error) {
       setActionState({
@@ -298,25 +267,8 @@ export function HotelProvider({ children }) {
     setActionState({ status: "submitting", reservationId, action: "assignment", error: "" });
 
     try {
-      const result = await assignReservationRoom({ reservationId, roomId });
-
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          reservations: current.reservations.map((reservation) =>
-            reservation.id === reservationId
-              ? {
-                  ...reservation,
-                  roomId,
-                  assignedRoomId: roomId,
-                }
-              : reservation,
-          ),
-        }));
-      } else {
-        await loadOperationsData();
-      }
-
+      await assignReservationRoom({ reservationId, roomId });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId, action: "assignment", error: "" });
     } catch (error) {
       setActionState({
@@ -332,53 +284,8 @@ export function HotelProvider({ children }) {
     setActionState({ status: "submitting", reservationId: null, action: "create-reservation", error: "" });
 
     try {
-      const result = await createReservationRecord(payload);
-
-      if (result.source === "fallback") {
-        const guestId = `guest-${Date.now()}`;
-        const reservationId = `res-${Date.now()}`;
-        setDataSource((current) => ({
-          ...current,
-          guests: [
-            ...current.guests,
-            {
-              id: guestId,
-              hotelId: payload.hotelId,
-              name: payload.guestName,
-              email: payload.guestEmail,
-              phone: payload.guestPhone,
-              loyaltyTier: "Unknown",
-              preferredChannel: payload.source || "Front desk",
-              notes: payload.notes || "",
-            },
-          ],
-          reservations: [
-            {
-              id: reservationId,
-              hotelId: payload.hotelId,
-              guestId,
-              roomId: payload.assignedRoomId || payload.roomTypeCode,
-              assignedRoomId: payload.assignedRoomId || null,
-              roomTypeCode: payload.roomTypeCode,
-              roomTitle: payload.roomTitle,
-              source: payload.source,
-              status: payload.status,
-              checkIn: payload.checkIn,
-              checkOut: payload.checkOut,
-              adults: payload.adults,
-              children: payload.children,
-              roomCount: payload.roomCount,
-              totalAmount: Number(payload.totalAmount ?? 0),
-              nightlyRate: Number(payload.nightlyRate ?? 0),
-              createdAt: new Date().toISOString(),
-              notes: payload.notes || "",
-            },
-          ],
-        }));
-      } else {
-        await loadOperationsData();
-      }
-
+      await createReservationRecord(payload);
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: null, action: "create-reservation", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: null, action: "create-reservation", error: error?.message ?? "We could not create the reservation." });
@@ -388,40 +295,8 @@ export function HotelProvider({ children }) {
   async function editReservation(reservationId, updates) {
     setActionState({ status: "submitting", reservationId, action: "edit-reservation", error: "" });
     try {
-      const result = await updateReservationRecord({ reservationId, updates });
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          guests: current.guests.map((guest) =>
-            guest.id === updates.guestId
-              ? { ...guest, name: updates.guestName, email: updates.guestEmail, phone: updates.guestPhone, preferredChannel: updates.source, notes: updates.notes || guest.notes }
-              : guest,
-          ),
-          reservations: current.reservations.map((reservation) =>
-            reservation.id === reservationId
-              ? {
-                  ...reservation,
-                  roomId: updates.assignedRoomId || reservation.roomId,
-                  assignedRoomId: updates.assignedRoomId || null,
-                  roomTypeCode: updates.roomTypeCode,
-                  roomTitle: updates.roomTitle,
-                  source: updates.source,
-                  status: updates.status,
-                  checkIn: updates.checkIn,
-                  checkOut: updates.checkOut,
-                  adults: updates.adults,
-                  children: updates.children,
-                  roomCount: updates.roomCount,
-                  totalAmount: Number(updates.totalAmount ?? 0),
-                  nightlyRate: Number(updates.nightlyRate ?? 0),
-                  notes: updates.notes || "",
-                }
-              : reservation,
-          ),
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await updateReservationRecord({ reservationId, updates });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId, action: "edit-reservation", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId, action: "edit-reservation", error: error?.message ?? "We could not update the reservation." });
@@ -431,15 +306,8 @@ export function HotelProvider({ children }) {
   async function removeReservation(reservationId) {
     setActionState({ status: "submitting", reservationId, action: "delete-reservation", error: "" });
     try {
-      const result = await deleteReservationRecord({ reservationId });
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          reservations: current.reservations.filter((reservation) => reservation.id !== reservationId),
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await deleteReservationRecord({ reservationId });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId, action: "delete-reservation", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId, action: "delete-reservation", error: error?.message ?? "We could not delete the reservation." });
@@ -449,27 +317,8 @@ export function HotelProvider({ children }) {
   async function createGuest(payload) {
     setActionState({ status: "submitting", reservationId: null, action: "create-guest", error: "" });
     try {
-      const result = await createGuestProfileRecord(payload);
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          guests: [
-            ...current.guests,
-            {
-              id: `guest-${Date.now()}`,
-              hotelId: payload.hotelId,
-              name: payload.name,
-              email: payload.email,
-              phone: payload.phone,
-              loyaltyTier: payload.loyaltyTier,
-              preferredChannel: payload.preferredChannel,
-              notes: payload.notes || "",
-            },
-          ],
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await createGuestProfileRecord(payload);
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: null, action: "create-guest", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: null, action: "create-guest", error: error?.message ?? "We could not create the guest profile." });
@@ -479,15 +328,8 @@ export function HotelProvider({ children }) {
   async function editGuest(guestId, updates) {
     setActionState({ status: "submitting", reservationId: guestId, action: "edit-guest", error: "" });
     try {
-      const result = await updateGuestProfileRecord({ guestId, updates });
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          guests: current.guests.map((guest) => (guest.id === guestId ? { ...guest, ...updates, name: updates.name } : guest)),
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await updateGuestProfileRecord({ guestId, updates });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: guestId, action: "edit-guest", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: guestId, action: "edit-guest", error: error?.message ?? "We could not update the guest profile." });
@@ -497,15 +339,8 @@ export function HotelProvider({ children }) {
   async function removeGuest(guestId) {
     setActionState({ status: "submitting", reservationId: guestId, action: "delete-guest", error: "" });
     try {
-      const result = await deleteGuestProfileRecord({ guestId });
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          guests: current.guests.filter((guest) => guest.id !== guestId),
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await deleteGuestProfileRecord({ guestId });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: guestId, action: "delete-guest", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: guestId, action: "delete-guest", error: error?.message ?? "We could not delete the guest profile." });
@@ -516,17 +351,7 @@ export function HotelProvider({ children }) {
     setActionState({ status: "submitting", reservationId: null, action: "create-room-type", error: "" });
     try {
       const result = await createRoomTypeRecord(payload);
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          roomTypes: [
-            ...(current.roomTypes ?? []),
-            { id: `room-type-${Date.now()}`, ...payload, amenities: payload.amenities ?? [] },
-          ],
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: null, action: "create-room-type", error: "" });
       return result;
     } catch (error) {
@@ -538,15 +363,8 @@ export function HotelProvider({ children }) {
   async function editRoomType(roomTypeId, updates) {
     setActionState({ status: "submitting", reservationId: roomTypeId, action: "edit-room-type", error: "" });
     try {
-      const result = await updateRoomTypeRecord({ roomTypeId, updates });
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          roomTypes: (current.roomTypes ?? []).map((roomType) => (roomType.id === roomTypeId ? { ...roomType, ...updates, amenities: updates.amenities ?? [] } : roomType)),
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await updateRoomTypeRecord({ roomTypeId, updates });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: roomTypeId, action: "edit-room-type", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: roomTypeId, action: "edit-room-type", error: error?.message ?? "We could not update the room type." });
@@ -556,15 +374,8 @@ export function HotelProvider({ children }) {
   async function removeRoomType(roomTypeId) {
     setActionState({ status: "submitting", reservationId: roomTypeId, action: "delete-room-type", error: "" });
     try {
-      const result = await deleteRoomTypeRecord({ roomTypeId });
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          roomTypes: (current.roomTypes ?? []).filter((roomType) => roomType.id !== roomTypeId),
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await deleteRoomTypeRecord({ roomTypeId });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: roomTypeId, action: "delete-room-type", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: roomTypeId, action: "delete-room-type", error: error?.message ?? "We could not delete the room type." });
@@ -581,11 +392,6 @@ export function HotelProvider({ children }) {
         kind,
       });
 
-      if (result.source === "fallback") {
-        setActionState({ status: "success", reservationId: roomTypeId, action: "upload-room-images", error: "" });
-        return result.uploadedImages ?? [];
-      }
-
       await loadOperationsData();
       setActionState({ status: "success", reservationId: roomTypeId, action: "upload-room-images", error: "" });
       return result.uploadedImages ?? [];
@@ -598,31 +404,8 @@ export function HotelProvider({ children }) {
   async function createRoom(payload) {
     setActionState({ status: "submitting", reservationId: null, action: "create-room", error: "" });
     try {
-      const result = await createRoomRecord(payload);
-      if (result.source === "fallback") {
-        const roomType = (dataSource.roomTypes ?? []).find((item) => item.id === payload.roomTypeId);
-        setDataSource((current) => ({
-          ...current,
-          rooms: [
-            ...current.rooms,
-            {
-              id: `room-${Date.now()}`,
-              hotelId: payload.hotelId,
-              roomTypeId: payload.roomTypeId,
-              roomType: roomType?.title ?? payload.roomCode,
-              roomCode: payload.roomCode,
-              floor: payload.floor,
-              occupancy: payload.occupancy,
-              status: payload.status,
-              housekeeping: payload.housekeeping,
-              amenities: [],
-              baseRate: 0,
-            },
-          ],
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await createRoomRecord(payload);
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: null, action: "create-room", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: null, action: "create-room", error: error?.message ?? "We could not create the room." });
@@ -632,26 +415,8 @@ export function HotelProvider({ children }) {
   async function editRoom(roomId, updates) {
     setActionState({ status: "submitting", reservationId: roomId, action: "edit-room", error: "" });
     try {
-      const result = await updateRoomRecord({ roomId, updates });
-      if (result.source === "fallback") {
-        const roomType = (dataSource.roomTypes ?? []).find((item) => item.id === updates.roomTypeId);
-        setDataSource((current) => ({
-          ...current,
-          rooms: current.rooms.map((room) =>
-            room.id === roomId
-              ? {
-                  ...room,
-                  ...updates,
-                  roomType: roomType?.title ?? room.roomType,
-                  floor: updates.floor,
-                  housekeeping: updates.housekeeping,
-                }
-              : room,
-          ),
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await updateRoomRecord({ roomId, updates });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: roomId, action: "edit-room", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: roomId, action: "edit-room", error: error?.message ?? "We could not update the room." });
@@ -661,15 +426,8 @@ export function HotelProvider({ children }) {
   async function removeRoom(roomId) {
     setActionState({ status: "submitting", reservationId: roomId, action: "delete-room", error: "" });
     try {
-      const result = await deleteRoomRecord({ roomId });
-      if (result.source === "fallback") {
-        setDataSource((current) => ({
-          ...current,
-          rooms: current.rooms.filter((room) => room.id !== roomId),
-        }));
-      } else {
-        await loadOperationsData();
-      }
+      await deleteRoomRecord({ roomId });
+      await loadOperationsData();
       setActionState({ status: "success", reservationId: roomId, action: "delete-room", error: "" });
     } catch (error) {
       setActionState({ status: "error", reservationId: roomId, action: "delete-room", error: error?.message ?? "We could not delete the room." });
@@ -680,9 +438,9 @@ export function HotelProvider({ children }) {
     role: currentUserRole,
     canManageStaff: currentUserRole === "owner",
     canManageProperties: currentUserRole === "owner" || currentUserRole === "manager",
-    canManageReservations: true,
-    canManageGuests: true,
-    canManageRooms: true,
+    canManageReservations: Boolean(currentUserRole),
+    canManageGuests: Boolean(currentUserRole),
+    canManageRooms: Boolean(currentUserRole),
   }), [currentUserRole]);
 
   const value = {

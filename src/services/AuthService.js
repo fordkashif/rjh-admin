@@ -24,7 +24,7 @@ function buildAuthPayload(session) {
 }
 
 function createConfigError() {
-    return new Error("Supabase auth is not configured for this admin app yet.");
+    return new Error("Sign-in is not available yet. Please check the admin connection settings.");
 }
 
 export function signUp(email, password) {
@@ -86,8 +86,8 @@ export function formatError(errorResponse) {
     }
 
     if (normalizedMessage.includes("not configured")) {
-        swal("Oops", "Supabase auth is not configured for this admin app yet", "error");
-        return "Supabase auth is not configured for this admin app yet.";
+        swal("Oops", "Sign-in is not available yet. Please check the admin connection settings.", "error");
+        return "Sign-in is not available yet. Please check the admin connection settings.";
     }
 
     const message = errorResponse?.message ?? "Authentication failed.";

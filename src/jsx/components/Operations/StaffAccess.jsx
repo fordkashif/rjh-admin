@@ -63,7 +63,7 @@ export default function StaffAccessPage() {
         setStaffState({
           status: "error",
           records: [],
-          error: error?.message ?? "We could not load hotel staff access right now.",
+          error: error?.message ?? "Staff access could not be loaded right now.",
         });
       }
     }
@@ -109,7 +109,7 @@ export default function StaffAccessPage() {
     } catch (error) {
       setSubmitState({
         status: "error",
-        error: error?.message ?? "We could not grant hotel access.",
+        error: error?.message ?? "Access could not be granted right now.",
         targetUserId: null,
       });
     }
@@ -128,10 +128,22 @@ export default function StaffAccessPage() {
     } catch (error) {
       setSubmitState({
         status: "error",
-        error: error?.message ?? "We could not revoke hotel access.",
+        error: error?.message ?? "Access could not be removed right now.",
         targetUserId: userId,
       });
     }
+  }
+
+  if (loadState.status === "loading") {
+    return <div className="alert alert-info">Loading staff access...</div>;
+  }
+
+  if (loadState.status === "error") {
+    return <div className="alert alert-warning">{loadState.error || "Staff access could not be loaded right now."}</div>;
+  }
+
+  if (!selectedHotel?.id) {
+    return <div className="alert alert-secondary">Choose a hotel before managing access.</div>;
   }
 
   return (
@@ -140,16 +152,11 @@ export default function StaffAccessPage() {
         <div>
           <h4 className="card-title mb-1">Staff Access</h4>
           <p className="mb-0">
-            Manage who can operate <strong>{selectedHotel.name}</strong> without going back to SQL.
+            Manage who can work inside <strong>{selectedHotel.name}</strong> from one place.
           </p>
         </div>
       </div>
       <div className="card-body">
-        {loadState.source !== "supabase" ? (
-          <div className="alert alert-warning">
-            Staff access management requires live Supabase data and authenticated admin access.
-          </div>
-        ) : null}
         {staffState.status === "error" ? (
           <div className="alert alert-warning">{staffState.error}</div>
         ) : null}
@@ -162,7 +169,7 @@ export default function StaffAccessPage() {
             <div className="border rounded p-4 h-100">
               <h5 className="mb-3">Grant Hotel Access</h5>
               <p className="text-muted">
-                The user must already exist in Supabase Auth before they can be assigned here.
+                Add an existing staff login and choose the access level for this hotel.
               </p>
 
               <form onSubmit={handleGrantAccess}>
@@ -210,7 +217,7 @@ export default function StaffAccessPage() {
                 <div>
                   <h5 className="mb-1">Current Staff Access</h5>
                   <p className="text-muted mb-0">
-                    {staffState.records.length} staff account{staffState.records.length === 1 ? "" : "s"} can currently manage this hotel.
+                    {staffState.records.length} staff account{staffState.records.length === 1 ? "" : "s"} currently have access to this hotel.
                   </p>
                 </div>
                 <div className="d-flex gap-2 flex-wrap">
@@ -226,7 +233,7 @@ export default function StaffAccessPage() {
                 <div className="alert alert-info mb-0">Loading staff access...</div>
               ) : staffState.records.length === 0 ? (
                 <div className="alert alert-secondary mb-0">
-                  No staff accounts are assigned to this hotel yet.
+                  No staff accounts have been assigned to this hotel yet.
                 </div>
               ) : (
                 <div className="table-responsive">

@@ -32,7 +32,11 @@ import ScrollToTop from './layouts/ScrollToTop';
 import { useHotelContext } from "../context/HotelContext";
 
 function RoleRoute({ allow, children }) {
-  const { currentUserRole } = useHotelContext();
+  const { currentUserRole, loadState } = useHotelContext();
+
+  if (loadState.status === "loading" || loadState.status === "error") {
+    return children;
+  }
 
   if (allow && !allow.includes(currentUserRole)) {
     return <Error403 />;

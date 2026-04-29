@@ -71,7 +71,7 @@ function MediaPreview({ image, label }) {
   if (!image) {
     return (
       <div className="border rounded p-3 text-muted text-center h-100">
-        {label} not uploaded yet
+        No {label.toLowerCase()} added yet
       </div>
     );
   }
@@ -97,6 +97,7 @@ export default function RoomsPage() {
     createRoom,
     editRoom,
     deleteRoom,
+    loadState,
   } = useHotelContext();
   const [activeTab, setActiveTab] = useState("room-types");
   const [isRoomTypeModalOpen, setIsRoomTypeModalOpen] = useState(false);
@@ -279,12 +280,20 @@ export default function RoomsPage() {
     }));
   }
 
+  if (loadState.status === "loading") {
+    return <div className="alert alert-info">Loading rooms and room types...</div>;
+  }
+
+  if (loadState.status === "error") {
+    return <div className="alert alert-warning">{loadState.error || "Rooms could not be loaded right now."}</div>;
+  }
+
   return (
     <div className="card">
       <div className="card-header border-0 pb-0 d-flex flex-wrap justify-content-between gap-3">
         <div>
           <h4 className="card-title mb-1">Rooms & Inventory</h4>
-          <p className="mb-0">Manage room types, physical rooms, and uploaded media from a cleaner operations workflow.</p>
+          <p className="mb-0">Manage room types, room inventory, and room media for this hotel.</p>
         </div>
         <div className="d-flex gap-2">
           <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-add-room-type">Add room type</Tooltip>}>
@@ -304,100 +313,108 @@ export default function RoomsPage() {
 
         <Tabs activeKey={activeTab} onSelect={(key) => setActiveTab(key ?? "room-types")} className="mb-4">
           <Tab eventKey="room-types" title="Room Types">
-            <div className="table-responsive">
-              <table className="table card-table default-table">
-                <thead>
-                  <tr>
-                    <th>Type</th>
-                    <th>Rate</th>
-                    <th>Capacity</th>
-                    <th>Amenities</th>
-                    <th>Status</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {roomTypeRecords.map((roomType) => (
-                    <tr key={roomType.id}>
-                      <td>
-                        <strong>{roomType.title}</strong>
-                        <div className="text-muted">{roomType.code}</div>
-                      </td>
-                      <td>
-                        <strong>${roomType.baseRate}</strong>
-                        <div className="text-muted">{roomType.rateLabel || "Standard rate"}</div>
-                      </td>
-                      <td>{roomType.maxAdults} adult / {roomType.maxChildren} child</td>
-                      <td>
-                        <div className="text-muted">{(roomType.amenities ?? []).slice(0, 3).join(", ") || "No amenities listed"}</div>
-                        <small>{totalStoredImagesByRoomType[roomType.id] ?? 0} stored media item(s)</small>
-                      </td>
-                      <td>
-                        <span className={`badge light ${roomType.isActive ? "badge-success" : "badge-secondary"}`}>
-                          {roomType.isActive ? "Active" : "Inactive"}
-                        </span>
-                      </td>
-                      <td>
-                        <div className="d-flex gap-2">
-                          <button type="button" className="btn btn-sm btn-info light" onClick={() => startRoomTypeEdit(roomType)}>
-                            Edit
-                          </button>
-                          <button type="button" className="btn btn-sm btn-outline-danger" onClick={() => deleteRoomType(roomType.id)}>
-                            Delete
-                          </button>
-                        </div>
-                      </td>
+            {roomTypeRecords.length === 0 ? (
+              <div className="alert alert-secondary mb-0">No room types have been added for this hotel yet.</div>
+            ) : (
+              <div className="table-responsive">
+                <table className="table card-table default-table">
+                  <thead>
+                    <tr>
+                      <th>Type</th>
+                      <th>Rate</th>
+                      <th>Capacity</th>
+                      <th>Amenities</th>
+                      <th>Status</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {roomTypeRecords.map((roomType) => (
+                      <tr key={roomType.id}>
+                        <td>
+                          <strong>{roomType.title}</strong>
+                          <div className="text-muted">{roomType.code}</div>
+                        </td>
+                        <td>
+                          <strong>${roomType.baseRate}</strong>
+                          <div className="text-muted">{roomType.rateLabel || "Standard rate"}</div>
+                        </td>
+                        <td>{roomType.maxAdults} adult / {roomType.maxChildren} child</td>
+                        <td>
+                          <div className="text-muted">{(roomType.amenities ?? []).slice(0, 3).join(", ") || "No amenities listed"}</div>
+                          <small>{totalStoredImagesByRoomType[roomType.id] ?? 0} media item(s)</small>
+                        </td>
+                        <td>
+                          <span className={`badge light ${roomType.isActive ? "badge-success" : "badge-secondary"}`}>
+                            {roomType.isActive ? "Active" : "Inactive"}
+                          </span>
+                        </td>
+                        <td>
+                          <div className="d-flex gap-2">
+                            <button type="button" className="btn btn-sm btn-info light" onClick={() => startRoomTypeEdit(roomType)}>
+                              Edit
+                            </button>
+                            <button type="button" className="btn btn-sm btn-outline-danger" onClick={() => deleteRoomType(roomType.id)}>
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </Tab>
 
           <Tab eventKey="rooms" title="Rooms">
-            <div className="table-responsive">
-              <table className="table card-table default-table">
-                <thead>
-                  <tr>
-                    <th>Room</th>
-                    <th>Type</th>
-                    <th>Floor</th>
-                    <th>Occupancy</th>
-                    <th>Housekeeping</th>
-                    <th>Status</th>
-                    <th>Linked reservation</th>
-                    <th>Actions</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {roomRecords.map((room) => (
-                    <tr key={room.id}>
-                      <td><strong>{room.roomCode}</strong></td>
-                      <td>{room.roomType}</td>
-                      <td>{room.floor}</td>
-                      <td>{room.occupancy} guest{room.occupancy === 1 ? "" : "s"}</td>
-                      <td>{room.housekeeping}</td>
-                      <td>
-                        <span className={`badge light ${getStatusBadgeClass(room.status)}`} style={{ textTransform: "capitalize" }}>
-                          {room.status}
-                        </span>
-                      </td>
-                      <td>{room.activeReservation?.id ?? "Open inventory"}</td>
-                      <td>
-                        <div className="d-flex gap-2">
-                          <button type="button" className="btn btn-sm btn-info light" onClick={() => startRoomEdit(room)}>
-                            Edit
-                          </button>
-                          <button type="button" className="btn btn-sm btn-outline-danger" onClick={() => deleteRoom(room.id)}>
-                            Delete
-                          </button>
-                        </div>
-                      </td>
+            {roomRecords.length === 0 ? (
+              <div className="alert alert-secondary mb-0">No rooms have been added for this hotel yet.</div>
+            ) : (
+              <div className="table-responsive">
+                <table className="table card-table default-table">
+                  <thead>
+                    <tr>
+                      <th>Room</th>
+                      <th>Type</th>
+                      <th>Floor</th>
+                      <th>Occupancy</th>
+                      <th>Housekeeping</th>
+                      <th>Status</th>
+                      <th>Linked reservation</th>
+                      <th>Actions</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
-            </div>
+                  </thead>
+                  <tbody>
+                    {roomRecords.map((room) => (
+                      <tr key={room.id}>
+                        <td><strong>{room.roomCode}</strong></td>
+                        <td>{room.roomType}</td>
+                        <td>{room.floor}</td>
+                        <td>{room.occupancy} guest{room.occupancy === 1 ? "" : "s"}</td>
+                        <td>{room.housekeeping}</td>
+                        <td>
+                          <span className={`badge light ${getStatusBadgeClass(room.status)}`} style={{ textTransform: "capitalize" }}>
+                            {room.status}
+                          </span>
+                        </td>
+                        <td>{room.activeReservation?.id ?? "Available"}</td>
+                        <td>
+                          <div className="d-flex gap-2">
+                            <button type="button" className="btn btn-sm btn-info light" onClick={() => startRoomEdit(room)}>
+                              Edit
+                            </button>
+                            <button type="button" className="btn btn-sm btn-outline-danger" onClick={() => deleteRoom(room.id)}>
+                              Delete
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            )}
           </Tab>
         </Tabs>
       </div>

@@ -16,7 +16,7 @@ const pageTitles = {
 
 const Header = () => {
   const { background, changeBackground } = useContext(ThemeContext);
-  const { hotels, selectedHotel, selectedHotelId, setSelectedHotelId } = useHotelContext();
+  const { hotels, selectedHotel, selectedHotelId, setSelectedHotelId, loadState } = useHotelContext();
   const currentSlug = window.location.pathname.split("/").filter(Boolean).pop() ?? "";
   const currentTitle = pageTitles[currentSlug] ?? "Dashboard";
 
@@ -43,9 +43,11 @@ const Header = () => {
                 <select
                   className="form-control"
                   style={{ minWidth: 220 }}
-                  value={selectedHotelId}
+                  value={selectedHotelId ?? ""}
                   onChange={(event) => setSelectedHotelId(event.target.value)}
+                  disabled={loadState.status !== "ready" || hotels.length === 0}
                 >
+                  {hotels.length === 0 ? <option value="">No hotels assigned</option> : null}
                   {hotels.map((hotel) => (
                     <option key={hotel.id} value={hotel.id}>
                       {hotel.name}
