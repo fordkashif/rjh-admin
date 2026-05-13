@@ -56,7 +56,7 @@ export const roomTypes = [
     title: "Comfort Suite",
     description: "A spacious suite designed for comfort, with workspace, sofa seating, and direct-booking convenience.",
     imageUrl: "/images/room/comfort-suite-homepage.jpg",
-    formImageUrl: "/images/form/1.jpg",
+    formImageUrl: "/images/slider/royale-jazz-hero-1-replacement.jpg",
     sizeLabel: "Oversized Suite",
     bedLabel: "Suite Layout",
     bestFor: "Couples and business travel",
@@ -68,7 +68,7 @@ export const roomTypes = [
     amenities: ["Free WiFi", "Microwave", "Refrigerator"],
     galleryImages: [
       { image: "/images/room/comfort-suite-homepage.jpg", alt: "Comfort Suite main photo" },
-      { image: "/images/form/1.jpg", alt: "Comfort Suite alternate photo" },
+      { image: "/images/slider/royale-jazz-hero-1-replacement.jpg", alt: "Comfort Suite alternate photo" },
     ],
     displayOrder: 1,
     isActive: true,
