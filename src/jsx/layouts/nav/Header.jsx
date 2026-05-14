@@ -7,16 +7,18 @@ import { useHotelContext } from "../../../context/HotelContext";
 
 const pageTitles = {
   "": "Dashboard",
+  company: "Company",
   dashboard: "Dashboard",
   reservations: "Reservations",
   guests: "Guests",
   rooms: "Rooms",
   properties: "Properties",
+  "staff-access": "Staff Access",
 };
 
 const Header = () => {
   const { background, changeBackground } = useContext(ThemeContext);
-  const { hotels, selectedHotel, selectedHotelId, setSelectedHotelId, loadState } = useHotelContext();
+  const { hotels, selectedHotel, selectedHotelId, setSelectedHotelId, loadState, organization } = useHotelContext();
   const currentSlug = window.location.pathname.split("/").filter(Boolean).pop() ?? "";
   const currentTitle = pageTitles[currentSlug] ?? "Dashboard";
 
@@ -69,8 +71,8 @@ const Header = () => {
                 <Dropdown.Toggle variant="" as="a" className="nav-link i-false c-pointer">
                   <img src={profile} width={20} alt="" />
                   <div className="header-info ms-3">
-                    <span className="font-w600 ">Hotel Admin</span>
-                    <small className="text-end fs-12">{selectedHotel?.shortName}</small>
+                    <span className="font-w600 ">{organization.brandName || organization.name || "Hotel Admin"}</span>
+                    <small className="text-end fs-12">{selectedHotel?.shortName || organization.adminSubtitle || "Admin Dashboard"}</small>
                   </div>
                 </Dropdown.Toggle>
                 <Dropdown.Menu align="end" className="mt-0 dropdown-menu dropdown-menu-end">

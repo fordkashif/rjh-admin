@@ -1,6 +1,7 @@
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import {
   assignReservationRoom,
+  createHotelRecordForOrganization,
   createGuestProfileRecord,
   createReservationRecord,
   createRoomRecord,
@@ -12,11 +13,13 @@ import {
   fetchHotelOperationsSnapshot,
   uploadRoomTypeMedia,
   updateGuestProfileRecord,
+  updateOrganizationBrandingRecord,
   updateReservationRecord,
   updateReservationStatus,
   updateRoomRecord,
   updateRoomTypeRecord,
 } from "../services/hotelOperationsService";
+import { applyBrandingToDocument, buildBrandingSnapshot, persistBranding } from "../lib/adminBranding";
 
 const HOTEL_STORAGE_KEY = "innap:selectedHotelId";
 const EMPTY_DATA_SOURCE = {
@@ -41,11 +44,20 @@ const EMPTY_HOTEL = {
   websiteUrl: "",
   timezone: "",
   description: "",
+  contactPhone: "",
+  contactEmail: "",
 };
 
 const EMPTY_ORGANIZATION = {
   id: "",
   name: "",
+  brandName: "",
+  adminSubtitle: "",
+  logoUrl: "",
+  primaryColor: "",
+  accentColor: "",
+  supportEmail: "",
+  supportPhone: "",
 };
 
 const HotelContext = createContext(null);
@@ -130,6 +142,12 @@ export function HotelProvider({ children }) {
     () => dataSource.organizations.find((item) => item.id === selectedHotel?.organizationId) ?? dataSource.organizations[0] ?? EMPTY_ORGANIZATION,
     [dataSource.organizations, selectedHotel],
   );
+
+  useEffect(() => {
+    const branding = buildBrandingSnapshot(organization, selectedHotel);
+    persistBranding(branding);
+    applyBrandingToDocument(branding);
+  }, [organization, selectedHotel]);
 
   const reservationsForHotel = useMemo(
     () => dataSource.reservations.filter((reservation) => reservation.hotelId === selectedHotel?.id),
@@ -434,10 +452,49 @@ export function HotelProvider({ children }) {
     }
   }
 
+  async function updateOrganizationBranding(payload) {
+    setActionState({ status: "submitting", reservationId: payload.organizationId, action: "update-organization-branding", error: "" });
+    try {
+      await updateOrganizationBrandingRecord(payload);
+      await loadOperationsData();
+      setActionState({ status: "success", reservationId: payload.organizationId, action: "update-organization-branding", error: "" });
+    } catch (error) {
+      setActionState({
+        status: "error",
+        reservationId: payload.organizationId,
+        action: "update-organization-branding",
+        error: error?.message ?? "We could not update the company branding.",
+      });
+      throw error;
+    }
+  }
+
+  async function createHotelForOrganization(payload) {
+    setActionState({ status: "submitting", reservationId: payload.organizationId, action: "create-hotel", error: "" });
+    try {
+      const result = await createHotelRecordForOrganization(payload);
+      await loadOperationsData();
+      if (result?.id) {
+        setSelectedHotelId(result.id);
+      }
+      setActionState({ status: "success", reservationId: result?.id ?? payload.organizationId, action: "create-hotel", error: "" });
+      return result;
+    } catch (error) {
+      setActionState({
+        status: "error",
+        reservationId: payload.organizationId,
+        action: "create-hotel",
+        error: error?.message ?? "We could not add the hotel.",
+      });
+      throw error;
+    }
+  }
+
   const permissions = useMemo(() => ({
     role: currentUserRole,
     canManageStaff: currentUserRole === "owner",
     canManageProperties: currentUserRole === "owner" || currentUserRole === "manager",
+    canManageCompany: currentUserRole === "owner",
     canManageReservations: Boolean(currentUserRole),
     canManageGuests: Boolean(currentUserRole),
     canManageRooms: Boolean(currentUserRole),
@@ -475,6 +532,8 @@ export function HotelProvider({ children }) {
     createRoom,
     editRoom,
     deleteRoom: removeRoom,
+    updateOrganizationBranding,
+    createHotelForOrganization,
   };
 
   return <HotelContext.Provider value={value}>{children}</HotelContext.Provider>;

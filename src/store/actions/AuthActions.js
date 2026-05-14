@@ -24,7 +24,7 @@ export function signupAction(email, password, navigate) {
         .then((response) => {
             saveTokenInLocalStorage(response.data);
             dispatch(confirmedSignupAction(response.data));
-            navigate('/dashboard');
+            navigate('/');
         })
         .catch((error) => {
             const errorMessage = formatError(error);
@@ -50,7 +50,7 @@ export function loginAction(email, password, navigate) {
             .then((response) => { 
                 saveTokenInLocalStorage(response.data);
                dispatch(loginConfirmedAction(response.data));			              
-				navigate('/dashboard');                
+				navigate('/');                
             })
             .catch((error) => {				
                 const errorMessage = formatError(error);

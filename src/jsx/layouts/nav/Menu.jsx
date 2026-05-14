@@ -5,6 +5,11 @@ export const MenuList = [
     iconStyle: <i className="flaticon-025-dashboard" />,
     content: [
       {
+        title: "Company",
+        to: "company",
+        roles: ["owner"],
+      },
+      {
         title: "Dashboard",
         to: "dashboard",
         roles: ["owner", "manager", "front_desk"],

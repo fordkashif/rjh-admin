@@ -3,10 +3,19 @@ import { Modal, OverlayTrigger, Tab, Tabs, Tooltip } from "react-bootstrap";
 import { useHotelContext } from "../../../context/HotelContext";
 
 function getStatusBadgeClass(status) {
-  if (status === "available") return "badge-success";
-  if (status === "occupied") return "badge-primary";
-  if (status === "reserved") return "badge-warning";
-  return "badge-danger";
+  if (status === "available") return "rj-status-badge--available";
+  if (status === "occupied") return "rj-status-badge--occupied";
+  if (status === "reserved") return "rj-status-badge--reserved";
+  if (status === "maintenance") return "rj-status-badge--maintenance";
+  if (status === "blocked") return "rj-status-badge--blocked";
+  return "rj-status-badge--out";
+}
+
+function getHousekeepingBadgeClass(status) {
+  const normalized = String(status ?? "").toLowerCase();
+  if (normalized === "clean" || normalized === "inspected") return "rj-housekeeping-badge--clean";
+  if (normalized === "dirty") return "rj-housekeeping-badge--dirty";
+  return "rj-housekeeping-badge--progress";
 }
 
 function createRoomTypeFormState(selectedHotelId) {
@@ -70,14 +79,14 @@ function buildRoomTypePayload(formState) {
 function MediaPreview({ image, label }) {
   if (!image) {
     return (
-      <div className="border rounded p-3 text-muted text-center h-100">
+      <div className="border rounded p-3 text-muted text-center h-100 rj-media-preview rj-media-preview--empty">
         No {label.toLowerCase()} added yet
       </div>
     );
   }
 
   return (
-    <div className="border rounded overflow-hidden h-100">
+    <div className="border rounded overflow-hidden h-100 rj-media-preview">
       <img src={image} alt={label} className="w-100" style={{ height: 150, objectFit: "cover" }} />
       <div className="p-2 small text-muted">{label}</div>
     </div>
@@ -289,13 +298,13 @@ export default function RoomsPage() {
   }
 
   return (
-    <div className="card">
+    <div className="card rj-operations-page rj-rooms-page">
       <div className="card-header border-0 pb-0 d-flex flex-wrap justify-content-between gap-3">
         <div>
           <h4 className="card-title mb-1">Rooms & Inventory</h4>
           <p className="mb-0">Manage room types, room inventory, and room media for this hotel.</p>
         </div>
-        <div className="d-flex gap-2">
+        <div className="d-flex gap-2 rj-toolbar">
           <OverlayTrigger placement="top" overlay={<Tooltip id="tooltip-add-room-type">Add room type</Tooltip>}>
             <button type="button" className="btn btn-primary" onClick={startCreateRoomType}>
               <i className="fa fa-layer-group" />
@@ -392,9 +401,13 @@ export default function RoomsPage() {
                         <td>{room.roomType}</td>
                         <td>{room.floor}</td>
                         <td>{room.occupancy} guest{room.occupancy === 1 ? "" : "s"}</td>
-                        <td>{room.housekeeping}</td>
                         <td>
-                          <span className={`badge light ${getStatusBadgeClass(room.status)}`} style={{ textTransform: "capitalize" }}>
+                          <span className={`badge light rj-housekeeping-badge ${getHousekeepingBadgeClass(room.housekeeping)}`}>
+                            {room.housekeeping}
+                          </span>
+                        </td>
+                        <td>
+                          <span className={`badge light rj-status-badge ${getStatusBadgeClass(room.status)}`} style={{ textTransform: "capitalize" }}>
                             {room.status}
                           </span>
                         </td>
@@ -419,7 +432,7 @@ export default function RoomsPage() {
         </Tabs>
       </div>
 
-      <Modal show={isRoomTypeModalOpen} onHide={resetRoomTypeForm} size="xl" centered>
+      <Modal show={isRoomTypeModalOpen} onHide={resetRoomTypeForm} size="xl" centered dialogClassName="rj-operations-modal">
         <form onSubmit={handleRoomTypeSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>{editingRoomTypeId ? "Edit room type" : "Add room type"}</Modal.Title>
@@ -510,10 +523,10 @@ export default function RoomsPage() {
                 <div>
                   <h6 className="mb-2">Gallery</h6>
                   {(roomTypeFormState.galleryImages ?? []).length ? (
-                    <div className="row g-2">
+                    <div className="row g-2 rj-gallery-admin-grid">
                       {roomTypeFormState.galleryImages.map((image, index) => (
                         <div className="col-6" key={`${image.image}-${index}`}>
-                          <div className="border rounded overflow-hidden">
+                          <div className="border rounded overflow-hidden rj-admin-gallery-card">
                             <img src={image.image} alt={image.alt || `Gallery ${index + 1}`} className="w-100" style={{ height: 110, objectFit: "cover" }} />
                             <div className="p-2 d-flex justify-content-between align-items-center">
                               <small className="text-muted">Photo {index + 1}</small>
@@ -543,7 +556,7 @@ export default function RoomsPage() {
         </form>
       </Modal>
 
-      <Modal show={isRoomModalOpen} onHide={resetRoomForm} centered>
+      <Modal show={isRoomModalOpen} onHide={resetRoomForm} centered dialogClassName="rj-operations-modal">
         <form onSubmit={handleRoomSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>{editingRoomId ? "Edit room" : "Add room"}</Modal.Title>

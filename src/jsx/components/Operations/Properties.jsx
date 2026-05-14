@@ -4,7 +4,7 @@ export default function PropertiesPage() {
   const { hotels, selectedHotelId, setSelectedHotelId, organization } = useHotelContext();
 
   return (
-    <div className="card">
+    <div className="card rj-operations-page rj-properties-page">
       <div className="card-header border-0 pb-0">
         <div>
           <h4 className="card-title mb-1">Properties</h4>
@@ -12,16 +12,13 @@ export default function PropertiesPage() {
         </div>
       </div>
       <div className="card-body">
-        <div className="alert alert-info">
-          <strong>{organization.name}</strong> is currently operating a single active property, with hotel-scoped data already in place for future expansion.
-        </div>
         <div className="row">
           {hotels.map((hotel) => {
             const isActive = hotel.id === selectedHotelId;
 
             return (
               <div className="col-xl-6 mb-4" key={hotel.id}>
-                <div className={`border rounded p-4 h-100 ${isActive ? "border-primary" : ""}`}>
+                <div className={`border rounded p-4 h-100 rj-property-card ${isActive ? "border-primary" : ""}`}>
                   <div className="d-flex justify-content-between align-items-start mb-3">
                     <div>
                       <h4 className="mb-1">{hotel.name}</h4>

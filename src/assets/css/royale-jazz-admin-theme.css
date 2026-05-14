@@ -1,0 +1,1373 @@
+body[data-tenant-theme="royale-jazz"] {
+  --rj-bg: #f6f1e8;
+  --rj-surface: #fffdf9;
+  --rj-surface-strong: #ffffff;
+  --rj-ink: #1f1a15;
+  --rj-muted: #6d6255;
+  --rj-line: rgba(77, 59, 35, 0.12);
+  --rj-gold: #bc9a70;
+  --rj-gold-deep: #9f7f56;
+  --rj-panel: #221d18;
+  --rj-panel-2: #2b241e;
+  --rj-shadow: 0 18px 50px rgba(28, 21, 14, 0.08);
+}
+
+body[data-tenant-theme="royale-jazz"] {
+  background: linear-gradient(180deg, #fbf7f0 0%, #f3ece0 100%);
+  color: var(--rj-ink);
+}
+
+body[data-tenant-theme="royale-jazz"] h1,
+body[data-tenant-theme="royale-jazz"] h2,
+body[data-tenant-theme="royale-jazz"] h3,
+body[data-tenant-theme="royale-jazz"] h4,
+body[data-tenant-theme="royale-jazz"] h5,
+body[data-tenant-theme="royale-jazz"] .dashboard_bar,
+body[data-tenant-theme="royale-jazz"] .card-title {
+  font-family: Georgia, "Times New Roman", serif;
+  letter-spacing: -0.02em;
+}
+
+body[data-tenant-theme="royale-jazz"] #main-wrapper {
+  background: transparent;
+}
+
+body[data-tenant-theme="royale-jazz"] .content-body {
+  background:
+    radial-gradient(circle at top left, rgba(188, 154, 112, 0.16), transparent 30%),
+    linear-gradient(180deg, #fbf7f0 0%, #f3ece0 100%);
+}
+
+body[data-tenant-theme="royale-jazz"] .container-fluid {
+  padding-top: 1.6rem;
+  padding-bottom: 1.6rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .header {
+  background: rgba(255, 252, 246, 0.84);
+  backdrop-filter: blur(18px);
+  border-bottom: 1px solid var(--rj-line);
+}
+
+body[data-tenant-theme="royale-jazz"] .header-content {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .dashboard_bar {
+  color: var(--rj-ink);
+  font-size: 2rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .header-right .form-control,
+body[data-tenant-theme="royale-jazz"] .header-right select.form-control {
+  border-radius: 999px;
+  border: 1px solid rgba(188, 154, 112, 0.4);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--rj-ink);
+  box-shadow: none;
+}
+
+body[data-tenant-theme="royale-jazz"] .header-right .form-control:focus,
+body[data-tenant-theme="royale-jazz"] .header-right select.form-control:focus,
+body[data-tenant-theme="royale-jazz"] .form-control:focus,
+body[data-tenant-theme="royale-jazz"] .form-select:focus {
+  border-color: var(--rj-gold);
+  box-shadow: 0 0 0 0.2rem rgba(188, 154, 112, 0.18);
+}
+
+body[data-tenant-theme="royale-jazz"] .nav-header {
+  background: linear-gradient(180deg, #201a15 0%, #17120f 100%) !important;
+  border-right: 1px solid rgba(255, 255, 255, 0.06);
+}
+
+body[data-tenant-theme="royale-jazz"] .nav-header .brand-logo {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+  padding-left: 1.15rem;
+  padding-right: 1.15rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .royale-jazz-admin-brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 1px solid rgba(188, 154, 112, 0.6);
+  color: var(--rj-gold);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+body[data-tenant-theme="royale-jazz"] .royale-jazz-admin-brand-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body[data-tenant-theme="royale-jazz"] .royale-jazz-admin-brand-copy {
+  display: grid;
+  gap: 0.12rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .royale-jazz-admin-brand-title {
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.2rem;
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: 0.02em;
+}
+
+body[data-tenant-theme="royale-jazz"] .royale-jazz-admin-brand-subtitle {
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .nav-control .hamburger .line {
+  background-color: #fff;
+}
+
+body[data-tenant-theme="royale-jazz"] .deznav {
+  background: linear-gradient(180deg, var(--rj-panel) 0%, #181310 100%);
+  box-shadow: inset -1px 0 0 rgba(255, 255, 255, 0.06);
+}
+
+body[data-tenant-theme="royale-jazz"] .deznav .metismenu > li > a,
+body[data-tenant-theme="royale-jazz"] .deznav .metismenu li li a {
+  color: rgba(255, 250, 243, 0.8);
+}
+
+body[data-tenant-theme="royale-jazz"] .deznav .metismenu > li > a:hover,
+body[data-tenant-theme="royale-jazz"] .deznav .metismenu > li.mm-active > a,
+body[data-tenant-theme="royale-jazz"] .deznav .metismenu li li a:hover,
+body[data-tenant-theme="royale-jazz"] .deznav .metismenu li li a.mm-active {
+  color: #fff;
+  background: rgba(188, 154, 112, 0.14);
+}
+
+body[data-tenant-theme="royale-jazz"] .deznav .metismenu > li.mm-active > a {
+  box-shadow: inset 3px 0 0 var(--rj-gold);
+}
+
+body[data-tenant-theme="royale-jazz"] .deznav .copyright {
+  padding: 1.2rem 1.4rem 1.6rem;
+  color: rgba(255, 250, 243, 0.66);
+}
+
+body[data-tenant-theme="royale-jazz"] .deznav .copyright strong {
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-weight: 700;
+}
+
+body[data-tenant-theme="royale-jazz"] .card {
+  border: 1px solid var(--rj-line);
+  background: rgba(255, 253, 249, 0.94);
+  box-shadow: var(--rj-shadow);
+}
+
+body[data-tenant-theme="royale-jazz"] .card .card-header {
+  border-bottom: 1px solid rgba(77, 59, 35, 0.08);
+  background: transparent;
+}
+
+body[data-tenant-theme="royale-jazz"] .card .card-title,
+body[data-tenant-theme="royale-jazz"] .card h5,
+body[data-tenant-theme="royale-jazz"] .card h2 {
+  color: var(--rj-ink);
+}
+
+body[data-tenant-theme="royale-jazz"] .text-muted,
+body[data-tenant-theme="royale-jazz"] .card p,
+body[data-tenant-theme="royale-jazz"] .card span {
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .card.gradient-1,
+body[data-tenant-theme="royale-jazz"] .card.gradient-2,
+body[data-tenant-theme="royale-jazz"] .card.gradient-3,
+body[data-tenant-theme="royale-jazz"] .card.gradient-4 {
+  border: 0;
+  background: linear-gradient(145deg, #2a221b 0%, #bc9a70 115%);
+  box-shadow: 0 22px 52px rgba(43, 33, 23, 0.18);
+}
+
+body[data-tenant-theme="royale-jazz"] .card.gradient-2 {
+  background: linear-gradient(145deg, #3b2a1e 0%, #b58b58 115%);
+}
+
+body[data-tenant-theme="royale-jazz"] .card.gradient-3 {
+  background: linear-gradient(145deg, #1f1c17 0%, #8f7552 115%);
+}
+
+body[data-tenant-theme="royale-jazz"] .card.gradient-4 {
+  background: linear-gradient(145deg, #2f2620 0%, #c5a47c 115%);
+}
+
+body[data-tenant-theme="royale-jazz"] .card.gradient-1 .text-white,
+body[data-tenant-theme="royale-jazz"] .card.gradient-2 .text-white,
+body[data-tenant-theme="royale-jazz"] .card.gradient-3 .text-white,
+body[data-tenant-theme="royale-jazz"] .card.gradient-4 .text-white,
+body[data-tenant-theme="royale-jazz"] .card.gradient-1 span,
+body[data-tenant-theme="royale-jazz"] .card.gradient-2 span,
+body[data-tenant-theme="royale-jazz"] .card.gradient-3 span,
+body[data-tenant-theme="royale-jazz"] .card.gradient-4 span {
+  color: #fff !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .bg-light,
+body[data-tenant-theme="royale-jazz"] .border.rounded,
+body[data-tenant-theme="royale-jazz"] .border.rounded.p-3 {
+  background: rgba(255, 255, 255, 0.7) !important;
+  border-color: rgba(188, 154, 112, 0.24) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-primary,
+body[data-tenant-theme="royale-jazz"] .badge-primary {
+  background: var(--rj-gold) !important;
+  border-color: var(--rj-gold) !important;
+  color: #fff !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-primary:hover,
+body[data-tenant-theme="royale-jazz"] .btn-primary:focus,
+body[data-tenant-theme="royale-jazz"] .btn-primary:active {
+  background: var(--rj-gold-deep) !important;
+  border-color: var(--rj-gold-deep) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-outline-primary {
+  color: var(--rj-gold-deep) !important;
+  border-color: rgba(188, 154, 112, 0.48) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-outline-primary:hover {
+  color: #fff !important;
+  background: var(--rj-gold) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .badge.light {
+  border: 1px solid rgba(188, 154, 112, 0.28);
+  background: rgba(188, 154, 112, 0.12);
+  color: var(--rj-gold-deep);
+}
+
+body[data-tenant-theme="royale-jazz"] .badge-warning {
+  background: rgba(188, 154, 112, 0.16) !important;
+  color: #7f6039 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .table,
+body[data-tenant-theme="royale-jazz"] table {
+  --bs-table-bg: transparent;
+  --bs-table-striped-bg: rgba(188, 154, 112, 0.04);
+  --bs-table-hover-bg: rgba(188, 154, 112, 0.08);
+}
+
+body[data-tenant-theme="royale-jazz"] .table thead th,
+body[data-tenant-theme="royale-jazz"] table thead th {
+  color: var(--rj-ink);
+  border-bottom-color: rgba(77, 59, 35, 0.12);
+}
+
+body[data-tenant-theme="royale-jazz"] .table td,
+body[data-tenant-theme="royale-jazz"] .table th,
+body[data-tenant-theme="royale-jazz"] table td,
+body[data-tenant-theme="royale-jazz"] table th {
+  border-color: rgba(77, 59, 35, 0.08);
+}
+
+body[data-tenant-theme="royale-jazz"] .modal-content {
+  border: 1px solid var(--rj-line);
+  background: #fffdf9;
+  box-shadow: 0 28px 70px rgba(20, 15, 10, 0.18);
+}
+
+body[data-tenant-theme="royale-jazz"] .modal-header,
+body[data-tenant-theme="royale-jazz"] .modal-footer {
+  border-color: rgba(77, 59, 35, 0.08);
+}
+
+body[data-tenant-theme="royale-jazz"] .alert {
+  border: 1px solid rgba(188, 154, 112, 0.2);
+  box-shadow: var(--rj-shadow);
+}
+
+body[data-tenant-theme="royale-jazz"] .alert-info {
+  background: rgba(188, 154, 112, 0.12);
+  border-color: rgba(188, 154, 112, 0.28);
+  color: #5f4b34;
+}
+
+body[data-tenant-theme="royale-jazz"] .alert-warning {
+  background: rgba(152, 90, 41, 0.1);
+  border-color: rgba(152, 90, 41, 0.2);
+  color: #7a4f27;
+}
+
+body[data-tenant-theme="royale-jazz"] .alert-secondary {
+  background: rgba(255, 255, 255, 0.74);
+  border-color: rgba(188, 154, 112, 0.18);
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page {
+  position: relative;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page.card,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .card {
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .card-header,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .card-header {
+  padding: 1.45rem 1.55rem 1.1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .card-header p,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .card-header p {
+  max-width: 48rem;
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .card-body,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .card-body {
+  padding: 1.5rem 1.55rem 1.6rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .border.rounded,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .border.rounded,
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .bg-light,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .bg-light {
+  border-radius: 20px !important;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .card-bx {
+  border-radius: 24px;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .card-bx .card-body {
+  padding: 1.6rem 1.45rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .card-bx h2 {
+  font-size: 2.2rem;
+  margin-bottom: 0.2rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-shell {
+  display: grid;
+  gap: 1.4rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: end;
+  gap: 1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-kicker {
+  display: inline-block;
+  margin-bottom: 0.65rem;
+  color: var(--rj-gold-deep);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-title {
+  color: var(--rj-ink);
+  font-size: clamp(2rem, 2.8vw, 2.8rem);
+  line-height: 1;
+  margin-bottom: 0.35rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-copy {
+  max-width: 42rem;
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-metric-card {
+  border-radius: 18px !important;
+  box-shadow: 0 10px 24px rgba(30, 22, 15, 0.05);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-metric-card .card-body {
+  padding: 1.2rem 1.25rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-metric-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.8rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-metric-label {
+  display: block;
+  margin-bottom: 0.5rem;
+  color: var(--rj-muted);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2rem;
+  height: 2rem;
+  color: #6b5b47;
+  border: 1px solid rgba(77, 59, 35, 0.12);
+  background: rgba(255, 255, 255, 0.86);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-icon svg {
+  width: 1rem;
+  height: 1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-metric-value {
+  color: var(--rj-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 2rem;
+  line-height: 1.1;
+  margin-bottom: 0.35rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-metric-helper {
+  color: var(--rj-muted);
+  font-size: 0.92rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-panel {
+  border-radius: 20px !important;
+  box-shadow: 0 12px 28px rgba(30, 22, 15, 0.06);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-block {
+  height: 100%;
+  padding: 1.15rem;
+  border: 1px solid rgba(188, 154, 112, 0.14);
+  background: rgba(255,255,255,0.6);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-block-label {
+  display: inline-block;
+  margin-bottom: 0.8rem;
+  color: var(--rj-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-occupancy-row {
+  display: grid;
+  gap: 0.3rem;
+  margin-bottom: 1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-occupancy-row span {
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-progress {
+  width: 100%;
+  height: 10px;
+  margin-bottom: 1.1rem;
+  overflow: hidden;
+  background: rgba(188, 154, 112, 0.12);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-progress-bar {
+  height: 100%;
+  background: linear-gradient(90deg, var(--rj-gold), var(--rj-gold-deep));
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-chart {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(52px, 1fr));
+  align-items: end;
+  gap: 0.85rem;
+  min-height: 210px;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-chart-col {
+  display: grid;
+  justify-items: center;
+  align-items: end;
+  gap: 0.7rem;
+  height: 100%;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-chart-bar {
+  width: 100%;
+  min-height: 18px;
+  background: linear-gradient(180deg, rgba(32, 26, 21, 0.82) 0%, rgba(32, 26, 21, 0.5) 100%);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-chart-col span {
+  color: var(--rj-muted);
+  font-size: 0.78rem;
+  text-align: center;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-mini-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.8rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-mini-stat {
+  padding: 0.8rem 0.9rem;
+  border: 1px solid rgba(188, 154, 112, 0.14);
+  background: rgba(255,255,255,0.72);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-mini-stat span {
+  display: block;
+  margin-bottom: 0.35rem;
+  color: var(--rj-muted);
+  font-size: 0.82rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-list-card {
+  display: grid;
+  gap: 0.25rem;
+  height: 100%;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(188, 154, 112, 0.14);
+  background: rgba(255,255,255,0.72);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-list-card span {
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-stack {
+  display: grid;
+  gap: 0.85rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-divider {
+  height: 1px;
+  margin: 1.35rem 0;
+  background: rgba(77, 59, 35, 0.08);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-alert-item,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-note {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(188, 154, 112, 0.14);
+  background: rgba(255,255,255,0.68);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-note {
+  align-items: start;
+  flex-direction: column;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-note-label {
+  color: var(--rj-muted);
+  font-size: 0.82rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-activity-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(188, 154, 112, 0.14);
+  background: rgba(255,255,255,0.68);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-activity-copy {
+  display: grid;
+  gap: 0.3rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-activity-copy span {
+  color: var(--rj-muted);
+  font-size: 0.9rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-activity-meta {
+  display: grid;
+  justify-items: end;
+  gap: 0.45rem;
+  text-align: right;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-activity-meta small {
+  color: var(--rj-muted);
+  font-size: 0.78rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-summary-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.86) 0%, rgba(255,255,255,0.74) 100%),
+    radial-gradient(circle at top right, rgba(188, 154, 112, 0.12), transparent 36%);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-mix-card {
+  transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-mix-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 16px 24px rgba(30, 22, 15, 0.08);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-arrival-item:last-child {
+  margin-bottom: 0 !important;
+  padding-bottom: 0 !important;
+  border-bottom: 0 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .border-bottom {
+  border-bottom-color: rgba(77, 59, 35, 0.1) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .table-responsive {
+  border: 1px solid rgba(188, 154, 112, 0.18);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.52);
+  overflow: hidden;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-toolbar {
+  align-items: center;
+  padding: 0.45rem;
+  border: 1px solid rgba(188, 154, 112, 0.16);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.7);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.5);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-toolbar .btn {
+  width: auto !important;
+  min-width: 0 !important;
+  padding: 0.72rem 1rem !important;
+  font-size: 0.92rem;
+  flex: 0 0 auto;
+  white-space: nowrap;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-filter-control {
+  min-width: 180px;
+  border-radius: 999px !important;
+  background: rgba(255,255,255,0.84) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-inline-select {
+  min-height: 38px !important;
+  border-radius: 12px !important;
+  font-size: 0.86rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-page .rj-filter-control {
+  max-width: 220px;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-toolbar {
+  display: flex;
+  align-items: center;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-snapshot {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0.9rem;
+  margin-bottom: 1.25rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-snapshot-card {
+  display: grid;
+  gap: 0.28rem;
+  padding: 0.95rem 1rem;
+  border: 1px solid rgba(188, 154, 112, 0.14);
+  background: rgba(255,255,255,0.7);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-snapshot-card span {
+  color: var(--rj-muted);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-snapshot-card strong {
+  color: var(--rj-ink);
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.55rem;
+  line-height: 1;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .table,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .table {
+  margin-bottom: 0;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .table thead th,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .table thead th {
+  padding: 1rem 1.1rem;
+  background: rgba(188, 154, 112, 0.08);
+  color: #5d4b38;
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .table tbody td,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .table tbody td {
+  padding: 1rem 1.1rem;
+  vertical-align: middle;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-table thead th {
+  padding: 0.82rem 1rem !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-table tbody td {
+  padding: 0.85rem 1rem !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .table tbody tr:hover td,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .table tbody tr:hover td {
+  background: rgba(188, 154, 112, 0.06);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-table thead th {
+  padding: 0.82rem 0.95rem !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-table tbody td {
+  padding: 0.82rem 0.95rem !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-table strong {
+  color: var(--rj-ink);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-action-group--compact .btn {
+  padding: 0.45rem 0.8rem !important;
+  font-size: 0.78rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .form-control,
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .form-select,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .form-control,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .form-select {
+  min-height: 46px;
+  border-radius: 14px;
+  border: 1px solid rgba(188, 154, 112, 0.26);
+  background: rgba(255, 255, 255, 0.92);
+  color: var(--rj-ink);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page textarea.form-control {
+  min-height: auto;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .form-label,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .form-label,
+body[data-tenant-theme="royale-jazz"] .rj-operations-page label strong {
+  color: var(--rj-ink);
+  font-weight: 700;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .btn,
+body[data-tenant-theme="royale-jazz"] .rj-dashboard-page .btn {
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-outline-danger {
+  color: #8f4a44 !important;
+  border-color: rgba(143, 74, 68, 0.34) !important;
+  background: rgba(255, 255, 255, 0.72) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-outline-danger:hover,
+body[data-tenant-theme="royale-jazz"] .btn-outline-danger:focus {
+  color: #fff !important;
+  background: #8f4a44 !important;
+  border-color: #8f4a44 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-danger.light,
+body[data-tenant-theme="royale-jazz"] .btn-info.light,
+body[data-tenant-theme="royale-jazz"] .btn-secondary,
+body[data-tenant-theme="royale-jazz"] .btn-light {
+  border-color: rgba(188, 154, 112, 0.2) !important;
+  box-shadow: none !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-danger.light {
+  background: rgba(143, 74, 68, 0.1) !important;
+  color: #8f4a44 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-info.light {
+  background: rgba(188, 154, 112, 0.12) !important;
+  color: #7a6245 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-secondary {
+  background: rgba(34, 29, 24, 0.9) !important;
+  border-color: rgba(34, 29, 24, 0.9) !important;
+  color: #fff !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .btn-light {
+  background: rgba(255, 255, 255, 0.82) !important;
+  color: var(--rj-ink) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .badge-secondary {
+  background: rgba(77, 59, 35, 0.12) !important;
+  color: #5c4936 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .badge-success {
+  background: rgba(87, 124, 78, 0.16) !important;
+  color: #4d6f45 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-status-badge,
+body[data-tenant-theme="royale-jazz"] .rj-housekeeping-badge,
+body[data-tenant-theme="royale-jazz"] .rj-loyalty-badge,
+body[data-tenant-theme="royale-jazz"] .rj-role-badge {
+  border-width: 1px;
+  border-style: solid;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--pending,
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--reserved,
+body[data-tenant-theme="royale-jazz"] .rj-housekeeping-badge--progress,
+body[data-tenant-theme="royale-jazz"] .rj-role-badge--frontdesk {
+  background: rgba(188, 154, 112, 0.14) !important;
+  border-color: rgba(188, 154, 112, 0.28) !important;
+  color: #7a6245 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--confirmed,
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--occupied,
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--inhouse,
+body[data-tenant-theme="royale-jazz"] .rj-loyalty-badge--vip,
+body[data-tenant-theme="royale-jazz"] .rj-role-badge--owner {
+  background: rgba(54, 78, 99, 0.12) !important;
+  border-color: rgba(54, 78, 99, 0.24) !important;
+  color: #425a6d !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--available,
+body[data-tenant-theme="royale-jazz"] .rj-housekeeping-badge--clean,
+body[data-tenant-theme="royale-jazz"] .rj-loyalty-badge--returning,
+body[data-tenant-theme="royale-jazz"] .rj-role-badge--manager {
+  background: rgba(87, 124, 78, 0.13) !important;
+  border-color: rgba(87, 124, 78, 0.24) !important;
+  color: #4d6f45 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--cancelled,
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--blocked,
+body[data-tenant-theme="royale-jazz"] .rj-housekeeping-badge--dirty {
+  background: rgba(143, 74, 68, 0.12) !important;
+  border-color: rgba(143, 74, 68, 0.24) !important;
+  color: #8f4a44 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--checkedout,
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--neutral,
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--maintenance,
+body[data-tenant-theme="royale-jazz"] .rj-status-badge--out,
+body[data-tenant-theme="royale-jazz"] .rj-loyalty-badge--standard {
+  background: rgba(77, 59, 35, 0.1) !important;
+  border-color: rgba(77, 59, 35, 0.18) !important;
+  color: #5d4b38 !important;
+}
+
+@media (max-width: 991px) {
+  body[data-tenant-theme="royale-jazz"] .rj-reservations-snapshot {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-dashboard-heading {
+    align-items: start;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-dashboard-chart {
+    min-height: 180px;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-dashboard-activity-item,
+  body[data-tenant-theme="royale-jazz"] .rj-dashboard-alert-item {
+    grid-template-columns: 1fr;
+    display: grid;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-dashboard-activity-meta {
+    justify-items: start;
+    text-align: left;
+  }
+}
+
+@media (max-width: 767px) {
+  body[data-tenant-theme="royale-jazz"] .rj-reservations-snapshot {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-reservations-toolbar,
+  body[data-tenant-theme="royale-jazz"] .rj-reservations-toolbar .rj-toolbar {
+    width: 100%;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-reservations-toolbar .rj-toolbar {
+    justify-content: space-between;
+  }
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-action-group .btn {
+  min-width: 92px;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-active-stay {
+  color: #4d6f45;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-modal {
+  max-width: min(1080px, calc(100vw - 2rem));
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-modal .modal-content {
+  border-radius: 24px;
+  overflow: hidden;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-modal .modal-header,
+body[data-tenant-theme="royale-jazz"] .rj-operations-modal .modal-footer {
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-modal .modal-body {
+  padding: 1.4rem 1.5rem 1.5rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .nav-tabs {
+  border-bottom: 1px solid rgba(188, 154, 112, 0.18);
+  gap: 0.65rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .nav-tabs .nav-link {
+  border: 0;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.56);
+  color: var(--rj-muted);
+  font-weight: 700;
+  padding: 0.72rem 1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .nav-tabs .nav-link.active,
+body[data-tenant-theme="royale-jazz"] .rj-operations-page .nav-tabs .nav-link:hover {
+  background: rgba(188, 154, 112, 0.16);
+  color: var(--rj-ink);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-reservations-page .card-header .d-flex.gap-2,
+body[data-tenant-theme="royale-jazz"] .rj-rooms-page .card-header .d-flex.gap-2 {
+  align-items: center;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-rooms-page .tooltip-inner {
+  background: var(--rj-panel);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-media-preview,
+body[data-tenant-theme="royale-jazz"] .rj-rooms-page .col-6 .border.rounded {
+  background: rgba(255, 255, 255, 0.76) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-gallery-admin-grid .rj-admin-gallery-card {
+  box-shadow: 0 10px 20px rgba(30, 22, 15, 0.06);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-staff-panel,
+body[data-tenant-theme="royale-jazz"] .rj-property-card {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.84) 0%, rgba(255,255,255,0.74) 100%),
+    radial-gradient(circle at top right, rgba(188,154,112,0.1), transparent 34%);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-property-card {
+  transition: transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-property-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 18px 28px rgba(30, 22, 15, 0.08);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-media-preview img,
+body[data-tenant-theme="royale-jazz"] .rj-rooms-page .col-6 img {
+  display: block;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-staff-page .badge.light.badge-primary,
+body[data-tenant-theme="royale-jazz"] .rj-guests-page .badge.light.badge-primary {
+  background: rgba(188, 154, 112, 0.14) !important;
+  color: #7a6245 !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-properties-page .border-primary {
+  border-color: rgba(188, 154, 112, 0.56) !important;
+  box-shadow: 0 16px 36px rgba(188, 154, 112, 0.14);
+}
+
+body[data-tenant-theme="royale-jazz"] .modal-title {
+  color: var(--rj-ink);
+  font-family: Georgia, "Times New Roman", serif;
+}
+
+body[data-tenant-theme="royale-jazz"] .header-profile .dropdown-menu {
+  border: 1px solid var(--rj-line);
+  box-shadow: 0 18px 50px rgba(20, 15, 10, 0.12);
+}
+
+body[data-tenant-theme="royale-jazz"] .header-profile .header-info span {
+  color: var(--rj-ink);
+}
+
+body[data-tenant-theme="royale-jazz"] .header-profile .header-info small {
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-page .card {
+  overflow: hidden;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-overview-card {
+  border: 0;
+  background:
+    radial-gradient(circle at top left, rgba(255, 255, 255, 0.16), transparent 28%),
+    linear-gradient(145deg, var(--company-accent, var(--rj-panel)) 0%, var(--company-primary, var(--rj-gold)) 135%);
+  color: #fff;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-kicker,
+body[data-tenant-theme="royale-jazz"] .rj-company-overview-card p,
+body[data-tenant-theme="royale-jazz"] .rj-company-overview-card span,
+body[data-tenant-theme="royale-jazz"] .rj-company-overview-card small {
+  color: rgba(255, 255, 255, 0.8) !important;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-title {
+  color: #fff;
+  font-size: 2.4rem;
+  margin-top: 0.9rem;
+  margin-bottom: 0.8rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-preview {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 1.1rem;
+  margin-top: 1.5rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.16);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-preview-mark {
+  width: 4rem;
+  height: 4rem;
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  color: var(--company-primary, var(--rj-gold));
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  overflow: hidden;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1.15rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-preview-mark img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-preview strong {
+  display: block;
+  color: #fff;
+  font-size: 1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-preview small {
+  display: block;
+  margin-top: 0.25rem;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-stat-list {
+  display: grid;
+  gap: 0.9rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-stat-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.8rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-stat-item strong {
+  color: #fff;
+  font-weight: 600;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-panel .card-body {
+  padding-top: 1.5rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-color-field {
+  display: grid;
+  grid-template-columns: 68px 1fr;
+  gap: 0.75rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-color-field .form-control-color {
+  padding: 0.35rem;
+  min-height: 52px;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-company-hotel-meta {
+  display: grid;
+  gap: 0.3rem;
+  color: var(--rj-muted);
+  font-size: 0.9rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-property-card--active {
+  border-color: rgba(188, 154, 112, 0.42);
+  box-shadow: 0 20px 35px rgba(26, 18, 11, 0.08);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-page {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 2rem;
+  background:
+    radial-gradient(circle at top left, rgba(188, 154, 112, 0.18), transparent 26%),
+    radial-gradient(circle at bottom right, rgba(34, 29, 24, 0.08), transparent 22%),
+    linear-gradient(180deg, #fbf7f0 0%, #f2ebdf 100%);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-shell {
+  width: min(1120px, 100%);
+  display: grid;
+  grid-template-columns: 1.05fr minmax(360px, 460px);
+  background: rgba(255, 253, 249, 0.92);
+  border: 1px solid rgba(77, 59, 35, 0.1);
+  box-shadow: 0 40px 80px rgba(28, 21, 14, 0.12);
+  overflow: hidden;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-panel,
+body[data-tenant-theme="royale-jazz"] .rj-login-form-panel {
+  padding: 3rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-panel {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.64) 0%, rgba(255,255,255,0.28) 100%),
+    linear-gradient(160deg, rgba(34,29,24,0.05) 0%, rgba(188,154,112,0.18) 100%);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-kicker {
+  display: inline-block;
+  color: var(--company-primary, var(--rj-gold));
+  font-size: 0.82rem;
+  font-weight: 700;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-title {
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  font-size: clamp(2.5rem, 5vw, 4.4rem);
+  line-height: 0.95;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-copy {
+  max-width: 38rem;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-card,
+body[data-tenant-theme="royale-jazz"] .rj-login-form-card {
+  border: 1px solid rgba(77, 59, 35, 0.1);
+  background: rgba(255, 255, 255, 0.72);
+  box-shadow: 0 22px 42px rgba(28, 21, 14, 0.06);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-card {
+  max-width: 31rem;
+  margin-top: 2rem;
+  padding: 1.35rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-logo {
+  display: block;
+  max-height: 56px;
+  width: auto;
+  margin-bottom: 1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-lockup {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-mark {
+  width: 3.5rem;
+  height: 3.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--company-accent, var(--rj-panel));
+  color: #fff;
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-lockup strong {
+  display: block;
+  color: var(--rj-ink);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-lockup small {
+  display: block;
+  margin-top: 0.25rem;
+  color: var(--rj-muted);
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-brand-meta {
+  display: grid;
+  gap: 0.45rem;
+  margin-top: 1rem;
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-form-panel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.52);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-form-card {
+  width: 100%;
+  max-width: 420px;
+  padding: 2rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-form-header h2 {
+  margin-bottom: 0.6rem;
+  font-size: 2rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-form-header p {
+  margin-bottom: 1.5rem;
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-checkbox {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  color: var(--rj-muted);
+}
+
+body[data-tenant-theme="royale-jazz"] .rj-login-checkbox input {
+  accent-color: var(--company-primary, var(--rj-gold));
+}
+
+@media only screen and (max-width: 767px) {
+  body[data-tenant-theme="royale-jazz"] .dashboard_bar {
+    font-size: 1.65rem;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .header-content {
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .nav-header .brand-logo {
+    gap: 0.65rem;
+    padding-left: 0.85rem;
+    padding-right: 0.85rem;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .royale-jazz-admin-brand-title {
+    font-size: 1rem;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .royale-jazz-admin-brand-subtitle {
+    font-size: 0.62rem;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-login-page {
+    padding: 1rem;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-login-shell {
+    grid-template-columns: 1fr;
+  }
+
+  body[data-tenant-theme="royale-jazz"] .rj-login-brand-panel,
+  body[data-tenant-theme="royale-jazz"] .rj-login-form-panel {
+    padding: 2rem;
+  }
+}

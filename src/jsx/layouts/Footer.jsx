@@ -8,7 +8,7 @@ const Footer = () => {
     <div className="footer">
       <div className="copyright">
         <p>
-          {(organization.name || "Hotel")} admin for {selectedHotel.name || "your property"} © {d.getFullYear()}
+          {(organization.brandName || organization.name || "Hotel")} admin for {selectedHotel.name || "your property"} © {d.getFullYear()}
         </p>
       </div>
     </div>

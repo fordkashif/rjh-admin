@@ -8,6 +8,13 @@ function formatCurrency(amount) {
   }).format(amount);
 }
 
+function getLoyaltyBadgeClass(tier) {
+  const normalized = String(tier ?? "").toLowerCase();
+  if (normalized.includes("vip")) return "rj-loyalty-badge--vip";
+  if (normalized.includes("return")) return "rj-loyalty-badge--returning";
+  return "rj-loyalty-badge--standard";
+}
+
 export default function GuestsPage() {
   const { guestRecords, actionState, loadState } = useHotelContext();
 
@@ -20,7 +27,7 @@ export default function GuestsPage() {
   }
 
   return (
-    <div className="card">
+    <div className="card rj-operations-page rj-guests-page">
       <div className="card-header border-0 pb-0">
         <div>
           <h4 className="card-title mb-1">Guest History</h4>
@@ -44,7 +51,7 @@ export default function GuestsPage() {
                       <h4 className="mb-1">{guest.name}</h4>
                       <div className="text-muted">{guest.email}</div>
                     </div>
-                    <span className="badge light badge-primary">{guest.loyaltyTier}</span>
+                    <span className={`badge light rj-loyalty-badge ${getLoyaltyBadgeClass(guest.loyaltyTier)}`}>{guest.loyaltyTier}</span>
                   </div>
 
                   <div className="d-flex justify-content-between mb-2">
@@ -65,7 +72,7 @@ export default function GuestsPage() {
                   </div>
                   <div className="d-flex justify-content-between mb-2">
                     <span>Active stay</span>
-                    <strong>{guest.activeReservation?.room?.roomCode ?? "None"}</strong>
+                    <strong className={guest.activeReservation?.room?.roomCode ? "rj-active-stay" : ""}>{guest.activeReservation?.room?.roomCode ?? "None"}</strong>
                   </div>
                   <div className="mt-3 text-muted" style={{ minHeight: 36 }}>
                     {guest.notes || "No notes recorded."}

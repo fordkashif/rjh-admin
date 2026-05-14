@@ -1,7 +1,7 @@
 import React, { useContext } from "react";
 
 /// React router dom
-import {Routes, Route, Outlet } from 'react-router-dom'
+import {Routes, Route, Outlet, Navigate } from 'react-router-dom'
 import { useSelector } from "react-redux";
 
 /// Css
@@ -18,6 +18,7 @@ import GuestsPage from "./components/Operations/Guests";
 import RoomsPage from "./components/Operations/Rooms";
 import PropertiesPage from "./components/Operations/Properties";
 import StaffAccessPage from "./components/Operations/StaffAccess";
+import CompanyPage from "./components/Operations/Company";
 
 /// Pages
 import LockScreen from "./pages/LockScreen";
@@ -45,14 +46,29 @@ function RoleRoute({ allow, children }) {
   return children;
 }
 
+function DefaultLandingRoute() {
+  const { currentUserRole, loadState } = useHotelContext();
+
+  if (loadState.status === "loading") {
+    return null;
+  }
+
+  if (currentUserRole === "owner") {
+    return <Navigate to="/company" replace />;
+  }
+
+  return <Navigate to="/dashboard" replace />;
+}
+
 
 const Markup = () => {
   const allroutes = [
-    { url: "", component: <OperationsDashboard />, allow: ["owner", "manager", "front_desk"] },
+    { url: "", component: <DefaultLandingRoute />, allow: ["owner", "manager", "front_desk"] },
     { url: "dashboard", component: <OperationsDashboard />, allow: ["owner", "manager", "front_desk"] },
     { url: "reservations", component: <ReservationsPage />, allow: ["owner", "manager", "front_desk"] },
     { url: "guests", component: <GuestsPage />, allow: ["owner", "manager", "front_desk"] },
     { url: "rooms", component: <RoomsPage />, allow: ["owner", "manager", "front_desk"] },
+    { url: "company", component: <CompanyPage />, allow: ["owner"] },
     { url: "properties", component: <PropertiesPage />, allow: ["owner", "manager"] },
     { url: "staff-access", component: <StaffAccessPage />, allow: ["owner"] },
   ];

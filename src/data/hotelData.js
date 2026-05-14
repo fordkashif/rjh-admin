@@ -2,6 +2,13 @@ export const organizations = [
   {
     id: "royale-jazz",
     name: "Royale Jazz",
+    brandName: "Royale Jazz",
+    adminSubtitle: "Admin Dashboard",
+    logoUrl: "",
+    primaryColor: "#bc9a70",
+    accentColor: "#221d18",
+    supportEmail: "royalejazzhotel@gmail.com",
+    supportPhone: "876-672-2462 / 876-589-2424",
   },
 ];
 
@@ -18,6 +25,8 @@ export const hotels = [
     websiteUrl: "royalejazzhotel.com",
     timezone: "America/Jamaica",
     description: "Direct-booking city hotel with two current suite options.",
+    contactPhone: "876-672-2462 / 876-589-2424",
+    contactEmail: "royalejazzhotel@gmail.com",
   },
 ];
 

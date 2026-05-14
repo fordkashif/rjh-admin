@@ -16,6 +16,12 @@ function formatRole(role) {
   return role.replaceAll("_", " ");
 }
 
+function getRoleBadgeClass(role) {
+  if (role === "owner") return "rj-role-badge--owner";
+  if (role === "manager") return "rj-role-badge--manager";
+  return "rj-role-badge--frontdesk";
+}
+
 export default function StaffAccessPage() {
   const { selectedHotel, loadState } = useHotelContext();
   const [staffState, setStaffState] = useState({
@@ -147,7 +153,7 @@ export default function StaffAccessPage() {
   }
 
   return (
-    <div className="card">
+    <div className="card rj-operations-page rj-staff-page">
       <div className="card-header border-0 pb-0">
         <div>
           <h4 className="card-title mb-1">Staff Access</h4>
@@ -166,7 +172,7 @@ export default function StaffAccessPage() {
 
         <div className="row">
           <div className="col-xl-5 mb-4">
-            <div className="border rounded p-4 h-100">
+            <div className="border rounded p-4 h-100 rj-staff-panel">
               <h5 className="mb-3">Grant Hotel Access</h5>
               <p className="text-muted">
                 Add an existing staff login and choose the access level for this hotel.
@@ -212,7 +218,7 @@ export default function StaffAccessPage() {
           </div>
 
           <div className="col-xl-7 mb-4">
-            <div className="border rounded p-4 h-100">
+            <div className="border rounded p-4 h-100 rj-staff-panel">
               <div className="d-flex justify-content-between align-items-start gap-3 flex-wrap mb-3">
                 <div>
                   <h5 className="mb-1">Current Staff Access</h5>
@@ -222,7 +228,7 @@ export default function StaffAccessPage() {
                 </div>
                 <div className="d-flex gap-2 flex-wrap">
                   {Object.entries(roleBreakdown).map(([role, count]) => (
-                    <span className="badge light badge-primary" key={role}>
+                    <span className={`badge light rj-role-badge ${getRoleBadgeClass(role)}`} key={role}>
                       {`${count} ${formatRole(role)}`}
                     </span>
                   ))}
@@ -256,7 +262,11 @@ export default function StaffAccessPage() {
                             <td>
                               <strong>{record.email}</strong>
                             </td>
-                            <td style={{ textTransform: "capitalize" }}>{formatRole(record.role)}</td>
+                            <td>
+                              <span className={`badge light rj-role-badge ${getRoleBadgeClass(record.role)}`} style={{ textTransform: "capitalize" }}>
+                                {formatRole(record.role)}
+                              </span>
+                            </td>
                             <td>{String(record.created_at).slice(0, 10)}</td>
                             <td>
                               <button

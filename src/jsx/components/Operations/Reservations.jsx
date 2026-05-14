@@ -10,6 +10,19 @@ function formatCurrency(amount) {
   }).format(amount);
 }
 
+function formatStatusLabel(status) {
+  return String(status ?? "").replaceAll("_", " ");
+}
+
+function getReservationStatusBadgeClass(status) {
+  if (status === "pending") return "rj-status-badge--pending";
+  if (status === "confirmed") return "rj-status-badge--confirmed";
+  if (status === "checked_in") return "rj-status-badge--inhouse";
+  if (status === "checked_out") return "rj-status-badge--checkedout";
+  if (status === "cancelled") return "rj-status-badge--cancelled";
+  return "rj-status-badge--neutral";
+}
+
 function createReservationFormState(selectedHotelId) {
   return {
     hotelId: selectedHotelId,
@@ -60,6 +73,16 @@ export default function ReservationsPage() {
 
     return reservationRecords.filter((reservation) => reservation.status === statusFilter);
   }, [reservationRecords, statusFilter]);
+
+  const reservationSnapshot = useMemo(
+    () => ({
+      total: reservationRecords.length,
+      pending: reservationRecords.filter((reservation) => reservation.status === "pending").length,
+      confirmed: reservationRecords.filter((reservation) => reservation.status === "confirmed").length,
+      inHouse: reservationRecords.filter((reservation) => reservation.status === "checked_in").length,
+    }),
+    [reservationRecords],
+  );
 
   const roomTypeOptions = useMemo(
     () => roomTypeRecords.map((roomType) => ({ value: roomType.code, label: roomType.title, nightlyRate: roomType.baseRate })),
@@ -218,32 +241,53 @@ export default function ReservationsPage() {
   }
 
   return (
-    <div className="card">
+    <div className="card rj-operations-page rj-reservations-page">
       <div className="card-header border-0 pb-0 d-flex flex-wrap justify-content-between gap-3">
         <div>
           <h4 className="card-title mb-1">Reservations</h4>
           <p className="mb-0">Create and manage reservations, room assignments, and stay progress from one place.</p>
         </div>
-        <div className="d-flex gap-2">
-          <select
-            className="form-control"
-            style={{ maxWidth: 220 }}
-            value={statusFilter}
-            onChange={(event) => setStatusFilter(event.target.value)}
-          >
-            <option value="all">All statuses</option>
-            <option value="pending">Pending</option>
-            <option value="confirmed">Confirmed</option>
-            <option value="checked_in">Checked in</option>
-            <option value="checked_out">Checked out</option>
-            <option value="cancelled">Cancelled</option>
-          </select>
-          <button type="button" className="btn btn-primary" onClick={openCreateModal}>
-            Add reservation
-          </button>
+        <div className="rj-reservations-toolbar">
+          <div className="d-flex gap-2 rj-toolbar">
+            <select
+              className="form-control rj-filter-control"
+              style={{ maxWidth: 220 }}
+              value={statusFilter}
+              onChange={(event) => setStatusFilter(event.target.value)}
+            >
+              <option value="all">All statuses</option>
+              <option value="pending">Pending</option>
+              <option value="confirmed">Confirmed</option>
+              <option value="checked_in">Checked in</option>
+              <option value="checked_out">Checked out</option>
+              <option value="cancelled">Cancelled</option>
+            </select>
+            <button type="button" className="btn btn-primary" onClick={openCreateModal}>
+              Add reservation
+            </button>
+          </div>
         </div>
       </div>
       <div className="card-body">
+        <div className="rj-reservations-snapshot">
+          <div className="rj-reservations-snapshot-card">
+            <span>All records</span>
+            <strong>{reservationSnapshot.total}</strong>
+          </div>
+          <div className="rj-reservations-snapshot-card">
+            <span>Pending</span>
+            <strong>{reservationSnapshot.pending}</strong>
+          </div>
+          <div className="rj-reservations-snapshot-card">
+            <span>Confirmed</span>
+            <strong>{reservationSnapshot.confirmed}</strong>
+          </div>
+          <div className="rj-reservations-snapshot-card">
+            <span>In house</span>
+            <strong>{reservationSnapshot.inHouse}</strong>
+          </div>
+        </div>
+
         {actionState.status === "error" ? <div className="alert alert-warning">{actionState.error}</div> : null}
 
         {visibleReservations.length === 0 ? (
@@ -252,7 +296,7 @@ export default function ReservationsPage() {
           </div>
         ) : (
           <div className="table-responsive">
-            <table className="table card-table default-table">
+            <table className="table card-table default-table rj-reservations-table">
               <thead>
                 <tr>
                   <th>Reference</th>
@@ -289,7 +333,7 @@ export default function ReservationsPage() {
                       <strong>{reservation.roomTitle}</strong>
                       <div className="text-muted">{reservation.room?.roomCode ?? "Unassigned"}</div>
                       <select
-                        className="form-control form-control-sm mt-2"
+                        className="form-control form-control-sm mt-2 rj-inline-select"
                         value={reservation.assignedRoomId ?? ""}
                         disabled={isUpdating}
                         onChange={(event) => {
@@ -306,10 +350,14 @@ export default function ReservationsPage() {
                         ))}
                       </select>
                     </td>
-                    <td style={{ textTransform: "capitalize" }}>{reservation.status.replace("_", " ")}</td>
+                    <td>
+                      <span className={`badge light rj-status-badge ${getReservationStatusBadgeClass(reservation.status)}`}>
+                        {formatStatusLabel(reservation.status)}
+                      </span>
+                    </td>
                     <td>{formatCurrency(reservation.totalAmount)}</td>
                     <td>
-                      <div className="d-flex flex-wrap gap-2">
+                      <div className="d-flex flex-wrap gap-2 rj-action-group rj-action-group--compact">
                         <button type="button" className="btn btn-sm btn-info light" onClick={() => populateFormFromReservation(reservation)}>
                           Edit
                         </button>
@@ -343,7 +391,7 @@ export default function ReservationsPage() {
           </div>
         )}
       </div>
-      <Modal show={isReservationModalOpen} onHide={resetForm} size="lg" centered>
+      <Modal show={isReservationModalOpen} onHide={resetForm} size="lg" centered dialogClassName="rj-operations-modal">
         <form onSubmit={handleFormSubmit}>
           <Modal.Header closeButton>
             <Modal.Title>{editingReservationId ? "Edit reservation" : "Add reservation"}</Modal.Title>

@@ -262,6 +262,7 @@ const ThemeContextProvider = (props) => {
 
   useEffect(() => {
     const body = document.querySelector("body");    
+    body.setAttribute("data-tenant-theme", "royale-jazz");
     body.setAttribute("data-typography", "poppins");
     body.setAttribute("data-theme-version", "light");
     body.setAttribute("data-layout", "vertical");

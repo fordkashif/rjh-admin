@@ -11,6 +11,8 @@ import { isAuthenticated } from './store/selectors/AuthSelectors';
 
 /// Style
 import "./assets/css/style.css";
+import "./assets/css/royale-jazz-admin-theme.css";
+import { applyBrandingToDocument, readStoredBranding } from "./lib/adminBranding";
 
 
 const SignUp = lazy(() => import('./jsx/pages/Registration'));
@@ -38,10 +40,11 @@ function withRouter(Component) {
 }
 function App (props) {
     const dispatch = useDispatch();
-    const navigate = useNavigate();    
+    const navigate = useNavigate();
       useEffect(() => {
-        checkAutoLogin(dispatch, navigate);    
-      }, []);
+        applyBrandingToDocument(readStoredBranding());
+        checkAutoLogin(dispatch, navigate);
+      }, [dispatch, navigate]);
 
     
     let routeblog = (         
@@ -97,4 +100,3 @@ const mapStateToProps = (state) => {
 
 //export default connect((mapStateToProps)(App)); 
 export default withRouter(connect(mapStateToProps)(App)); 
-

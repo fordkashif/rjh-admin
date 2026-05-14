@@ -217,6 +217,13 @@ export async function fetchHotelOperationsSnapshot() {
     organizations: orgRows.map((item) => ({
       id: item.id,
       name: item.name,
+      brandName: item.brand_name ?? item.name,
+      adminSubtitle: item.admin_subtitle ?? "",
+      logoUrl: item.logo_url ?? "",
+      primaryColor: item.primary_color ?? "",
+      accentColor: item.accent_color ?? "",
+      supportEmail: item.support_email ?? "",
+      supportPhone: item.support_phone ?? "",
     })),
     hotels: hotelRows.map((item) => ({
       id: item.id,
@@ -230,6 +237,8 @@ export async function fetchHotelOperationsSnapshot() {
       websiteUrl: item.website_url,
       timezone: item.timezone,
       description: item.description,
+      contactPhone: item.contact_phone ?? "",
+      contactEmail: item.contact_email ?? "",
     })),
     roomTypes: roomTypeRows.map((item) => ({
       id: item.id,
@@ -310,6 +319,52 @@ export async function fetchHotelOperationsSnapshot() {
       role: item.role,
     })),
   };
+}
+
+export async function updateOrganizationBrandingRecord(payload) {
+  requireConfiguredOperationsClient();
+
+  const { data, error } = await supabase.rpc("admin_update_organization_branding", {
+    p_organization_id: payload.organizationId,
+    p_brand_name: payload.brandName || null,
+    p_admin_subtitle: payload.adminSubtitle || null,
+    p_logo_url: payload.logoUrl || null,
+    p_primary_color: payload.primaryColor || null,
+    p_accent_color: payload.accentColor || null,
+    p_support_email: payload.supportEmail || null,
+    p_support_phone: payload.supportPhone || null,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
+}
+
+export async function createHotelRecordForOrganization(payload) {
+  requireConfiguredOperationsClient();
+
+  const { data, error } = await supabase.rpc("admin_create_hotel", {
+    p_organization_id: payload.organizationId,
+    p_name: payload.name,
+    p_short_name: payload.shortName || null,
+    p_code: payload.code,
+    p_city: payload.city || null,
+    p_country: payload.country || null,
+    p_website_label: payload.websiteLabel || null,
+    p_website_url: payload.websiteUrl || null,
+    p_timezone: payload.timezone || null,
+    p_description: payload.description || null,
+    p_contact_phone: payload.contactPhone || null,
+    p_contact_email: payload.contactEmail || null,
+  });
+
+  if (error) {
+    throw error;
+  }
+
+  return data;
 }
 
 function getRoomStatusForReservationStatus(status, currentRoomStatus) {
