@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { loadingToggleAction, loginAction } from "../../store/actions/AuthActions";
 import { readStoredBranding } from "../../lib/adminBranding";
 
+const HELP_GUIDE_PATH = "/help/client-admin-booking-guide.html";
+
 function Login(props) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -81,8 +83,21 @@ function Login(props) {
         <section className="rj-login-form-panel">
           <div className="rj-login-form-card">
             <div className="rj-login-form-header">
-              <h2>Sign in</h2>
-              <p>Use your company credentials to enter the admin dashboard.</p>
+              <div className="d-flex justify-content-between align-items-start gap-3 flex-wrap">
+                <div>
+                  <h2>Sign in</h2>
+                  <p>Use your company credentials to enter the admin dashboard.</p>
+                </div>
+                <a
+                  href={HELP_GUIDE_PATH}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rj-help-button rj-help-button--ghost"
+                >
+                  <i className="fas fa-question-circle" aria-hidden="true" />
+                  <span>Help</span>
+                </a>
+              </div>
             </div>
 
             {props.errorMessage ? <div className="alert alert-warning mb-3">{props.errorMessage}</div> : null}
@@ -125,6 +140,15 @@ function Login(props) {
               <button type="submit" className="btn btn-primary w-100 mt-4">
                 Sign in to dashboard
               </button>
+
+              <a
+                href={HELP_GUIDE_PATH}
+                target="_blank"
+                rel="noreferrer"
+                className="rj-login-help-link"
+              >
+                Need help using the dashboard? Open the user guide.
+              </a>
             </form>
           </div>
         </section>

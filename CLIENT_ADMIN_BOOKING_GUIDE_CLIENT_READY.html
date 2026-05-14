@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title>Royale Jazz Hotel Admin Dashboard User Guide</title>
+<style>
+  body { font-family: 'Helvetica Neue', Arial, sans-serif; color: #241f1a; line-height: 1.55; margin: 42px; }
+  .cover { padding: 36px 0 28px; border-bottom: 2px solid #bc9a70; margin-bottom: 30px; }
+  .eyebrow { font-size: 12px; letter-spacing: 0.18em; text-transform: uppercase; color: #9b7c56; font-weight: 700; margin-bottom: 16px; }
+  h1 { font-size: 28px; margin: 0 0 8px; font-family: Georgia, 'Times New Roman', serif; font-weight: 700; }
+  .subtitle { font-size: 16px; color: #5d5348; margin-bottom: 18px; }
+  .meta { color: #776b5d; font-size: 11px; }
+  h2 { font-size: 20px; margin: 28px 0 12px; color: #1f1a15; border-bottom: 1px solid #e7ded2; padding-bottom: 6px; font-family: Georgia, 'Times New Roman', serif; }
+  h3 { font-size: 15px; margin: 18px 0 8px; color: #2d241b; }
+  p { margin: 0 0 12px; }
+  ul, ol { margin: 0 0 12px 22px; }
+  li { margin: 0 0 6px; }
+  table { border-collapse: collapse; width: 100%; margin: 14px 0 24px; font-size: 12px; }
+  th, td { border: 1px solid #d8cec1; padding: 9px 10px; text-align: left; }
+  th { background: #f5ede3; color: #2a2018; }
+  .callout { background: #faf6f0; border-left: 4px solid #bc9a70; padding: 14px 16px; margin: 14px 0 18px; }
+  .screenshot-block { margin: 18px 0 24px; }
+  .screenshot-block img { width: 100%; max-width: 760px; border: 1px solid #d7cec2; box-shadow: 0 10px 30px rgba(36,31,26,0.10); display: block; }
+  .caption { font-size: 11px; color: #776b5d; margin-top: 8px; }
+  .placeholder-grid { margin: 12px 0 20px; }
+  .placeholder { border: 1px dashed #cbb8a2; background: #fcfaf7; padding: 16px; margin: 0 0 12px; }
+  .placeholder strong { display:block; margin-bottom: 6px; color:#2b2219; }
+  .toc li { margin-bottom: 4px; }
+  code { background: #f5efe6; padding: 1px 4px; font-family: Menlo, monospace; }
+</style>
+</head>
+<body>
+  <section class="cover">
+    <div class="eyebrow">Royale Jazz Hotel</div>
+    <h1>Admin Dashboard User Guide</h1>
+    <div class="subtitle">Client handoff guide for company setup, user access, reservations, rooms, and daily operations.</div>
+    <div class="meta">Prepared for client review · May 14, 2026</div>
+  </section>
+
+  <section>
+    <h2>Contents</h2>
+    <ol class="toc">
+      <li>Admin overview</li>
+      <li>User roles and permissions</li>
+      <li>How to create and give access to users</li>
+      <li>Company management</li>
+      <li>Reservations and booking workflow</li>
+      <li>Rooms, guests, and property management</li>
+      <li>Suggested screenshot set for final training pack</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>1. Admin Overview</h2>
+    <p>The Royale Jazz admin dashboard is the hotel’s internal workspace for operations and management. It is used to control branding, manage reservations, assign rooms, track guest history, maintain room inventory, and manage staff access.</p>
+    <div class="callout">
+      <strong>Important:</strong> Different users see different pages depending on their role. Owners have the broadest access. Managers and Front Desk staff see only the areas they need for their daily work.
+    </div>
+  </section>
+
+  <section>
+    <h2>2. Login Experience</h2>
+    <p>The login screen is branded from the company settings. If no company logo has been added yet, no logo will display. Owners are taken to the <code>Company</code> page after login, while Managers and Front Desk users are taken to the <code>Dashboard</code>.</p>
+    <div class="screenshot-block">
+      <img src="login-screenshot.png" alt="Royale Jazz admin login screen" />
+      <div class="caption">Figure 1. Live login screen captured from the current Royale Jazz admin build.</div>
+    </div>
+  </section>
+
+  <section>
+    <h2>3. User Roles and Permissions</h2>
+    <p>There are three user roles in the system: <strong>Owner</strong>, <strong>Manager</strong>, and <strong>Front Desk</strong>.</p>
+    <table>
+      <tr><th>Section</th><th>Owner</th><th>Manager</th><th>Front Desk</th></tr>
+      <tr><td>Company</td><td>Yes</td><td>No</td><td>No</td></tr>
+      <tr><td>Dashboard</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Reservations</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Guests</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Rooms</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+      <tr><td>Properties</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+      <tr><td>Staff Access</td><td>Yes</td><td>No</td><td>No</td></tr>
+    </table>
+    <h3>Owner</h3>
+    <p>Owners can manage company branding, hotels, staff access, reservations, rooms, guests, and property information.</p>
+    <h3>Manager</h3>
+    <p>Managers can run daily hotel operations, including reservations, guests, rooms, and property content, but cannot manage company settings or staff access.</p>
+    <h3>Front Desk</h3>
+    <p>Front Desk users focus on live guest operations: arrivals, departures, reservations, room assignment, and guest history.</p>
+  </section>
+
+  <section>
+    <h2>4. How to Get a User Into the System</h2>
+    <p>A staff member must already have a login account before access can be granted to a hotel. After that, an Owner can open <code>Staff Access</code> and grant the user the correct role.</p>
+    <ol>
+      <li>Create the staff member’s login account.</li>
+      <li>Confirm the staff member can sign in.</li>
+      <li>Log in as an Owner.</li>
+      <li>Open <code>Staff Access</code>.</li>
+      <li>Enter the staff email address.</li>
+      <li>Choose the role: Owner, Manager, or Front Desk.</li>
+      <li>Save the access record.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>5. Company Management</h2>
+    <p>The <code>Company</code> page is owner-only and controls the overall look and feel of the admin dashboard.</p>
+    <p>Owners can update:</p>
+    <ul>
+      <li>brand name</li>
+      <li>admin subtitle</li>
+      <li>logo URL</li>
+      <li>primary color</li>
+      <li>accent color</li>
+      <li>support email</li>
+      <li>support phone</li>
+    </ul>
+    <p>Owners can also add hotels from this page by entering the hotel’s details and saving the new record.</p>
+  </section>
+
+  <section>
+    <h2>6. Reservations and Booking Workflow</h2>
+    <p>The <code>Reservations</code> page is the main booking management screen. Staff can create, edit, confirm, cancel, check in, check out, assign rooms, and delete reservations from this area.</p>
+    <h3>Reservation lifecycle</h3>
+    <ol>
+      <li><strong>Pending</strong>: a request exists but has not yet been accepted.</li>
+      <li><strong>Confirmed</strong>: the booking has been accepted and is expected to arrive.</li>
+      <li><strong>Checked In</strong>: the guest is currently in house.</li>
+      <li><strong>Checked Out</strong>: the stay is complete.</li>
+    </ol>
+    <p>A reservation can also be marked <strong>Cancelled</strong>.</p>
+    <div class="callout">
+      <strong>Important:</strong> A room should be assigned before check-in. The workflow is designed so that staff can confirm and prepare a reservation first, then assign the room, then complete check-in.
+    </div>
+    <h3>Manual booking steps</h3>
+    <ol>
+      <li>Open <code>Reservations</code>.</li>
+      <li>Click <code>Add Reservation</code>.</li>
+      <li>Enter the guest’s details.</li>
+      <li>Select the room type and dates.</li>
+      <li>Set the nightly rate and total amount.</li>
+      <li>Assign a room if one is already known.</li>
+      <li>Save the reservation.</li>
+    </ol>
+    <h3>Public booking request steps</h3>
+    <ol>
+      <li>Open <code>Reservations</code>.</li>
+      <li>Filter to <code>Pending</code>.</li>
+      <li>Review guest details, dates, and room type.</li>
+      <li>Confirm availability.</li>
+      <li>Assign a room when appropriate.</li>
+      <li>Click <code>Confirm</code>.</li>
+    </ol>
+  </section>
+
+  <section>
+    <h2>7. Rooms, Guests, and Properties</h2>
+    <h3>Guests</h3>
+    <p>The <code>Guests</code> page gives the team a running history of guest contact details, spend, stay count, active stay information, and notes.</p>
+    <h3>Rooms</h3>
+    <p>The <code>Rooms</code> page manages both room types and physical room inventory. Staff can maintain room status, housekeeping state, occupancy, and media attached to room types.</p>
+    <h3>Properties</h3>
+    <p>The <code>Properties</code> page is available to Owners and Managers and is used for hotel content and configuration management.</p>
+  </section>
+
+  <section>
+    <h2>8. Daily Operations Checklist</h2>
+    <h3>Start of day</h3>
+    <ol>
+      <li>Open the <code>Dashboard</code>.</li>
+      <li>Review arrivals, unassigned rooms, and in-house stays.</li>
+      <li>Open <code>Reservations</code> and prepare any pending arrivals.</li>
+    </ol>
+    <h3>During the day</h3>
+    <ol>
+      <li>Process new bookings.</li>
+      <li>Confirm pending requests.</li>
+      <li>Assign rooms.</li>
+      <li>Check guests in.</li>
+      <li>Update room readiness and housekeeping.</li>
+    </ol>
+    <h3>End of day</h3>
+    <ol>
+      <li>Review in-house guests.</li>
+      <li>Check out departures.</li>
+      <li>Update room statuses.</li>
+      <li>Leave notes for the next shift.</li>
+    </ol>
+  </section>
+
+  <!-- <section>
+    <h2>9. Screenshot Set for Final Client Pack</h2>
+    <p>This document now includes the live login screen. The remaining screenshots should be captured after final deployment with the client’s preferred branding and live data.</p>
+    <div class="placeholder-grid">
+      <div class="placeholder"><strong>Screenshot placeholder: Company page</strong>Use after owner branding and hotel details have been added.</div>
+      <div class="placeholder"><strong>Screenshot placeholder: Dashboard</strong>Use a real operational view with arrivals and occupancy.</div>
+      <div class="placeholder"><strong>Screenshot placeholder: Reservations page</strong>Capture filters, status chips, and room assignment controls.</div>
+      <div class="placeholder"><strong>Screenshot placeholder: Add Reservation modal</strong>Capture the form fields used for a manual booking.</div>
+      <div class="placeholder"><strong>Screenshot placeholder: Rooms page</strong>Capture room statuses and housekeeping states.</div>
+      <div class="placeholder"><strong>Screenshot placeholder: Staff Access page</strong>Capture the staff roles and grant access form.</div>
+    </div>
+  </section> -->
+
+  <section>
+    <h2>9. Quick Reference</h2>
+    <p><strong>Owners</strong> manage the company, hotels, staff access, and all hotel operations.</p>
+    <p><strong>Managers</strong> manage reservations, guests, rooms, and property content.</p>
+    <p><strong>Front Desk</strong> manages day-to-day booking activity, guest arrivals, room assignment, and departures.</p>
+  </section>
+</body>
+</html>

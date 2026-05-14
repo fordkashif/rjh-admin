@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html><head><meta charset="utf-8">
+<title>Royale Jazz Hotel Admin Dashboard User Guide</title>
+<style>
+body{font-family:Helvetica,Arial,sans-serif; color:#222; line-height:1.5; margin:48px;}
+h1{font-size:28px; margin:0 0 8px 0;} h2{font-size:20px; margin:28px 0 12px;} h3{font-size:16px; margin:20px 0 10px;}
+p{margin:0 0 12px 0;} ul,ol{margin:0 0 12px 24px;} li{margin:0 0 6px 0;}
+code{font-family:Menlo,monospace; background:#f4f1ec; padding:1px 4px;}
+table{border-collapse:collapse; width:100%; margin:12px 0 20px;} th,td{border:1px solid #cfc7bb; padding:8px 10px; text-align:left;} th{background:#f4ede2;}
+</style></head><body>
+<h1>Royale Jazz Hotel</h1>
+<h1>Admin Dashboard User Guide</h1>
+<p>This guide is written for the hotel team and explains how to use the admin dashboard day to day.</p>
+<p>It covers:</p>
+<ul>
+<li>logging in</li>
+<li>company and hotel setup</li>
+<li>how user roles work</li>
+<li>how to give staff access</li>
+<li>how to manage bookings</li>
+<li>how the booking process works from request to check-out</li>
+<li>what each admin section is used for</li>
+</ul>
+<h2>1. Admin Dashboard Overview</h2>
+<p>The Royale Jazz admin dashboard is the internal workspace used to manage:</p>
+<ul>
+<li>company branding</li>
+<li>hotel information</li>
+<li>reservations</li>
+<li>guest history</li>
+<li>room inventory</li>
+<li>staff access</li>
+</ul>
+<p>Depending on the user’s role, they will see different pages and options.</p>
+<h2>2. Main Admin Sections</h2>
+<p>The dashboard includes these main areas:</p>
+<ul>
+<li><code>Company</code></li>
+<li><code>Dashboard</code></li>
+<li><code>Reservations</code></li>
+<li><code>Guests</code></li>
+<li><code>Rooms</code></li>
+<li><code>Properties</code></li>
+<li><code>Staff Access</code></li>
+</ul>
+<p>Not every user will see all of these sections.</p>
+<h2>3. User Roles</h2>
+<p>There are three user roles in the current system:</p>
+<ol>
+<li><code>Owner</code></li>
+<li><code>Manager</code></li>
+<li><code>Front Desk</code></li>
+</ol>
+<p>Each role has a different level of access.</p>
+<h3>Owner</h3>
+<p>Owners have full access to the company and hotel workspace.</p>
+<p>Owners can:</p>
+<ul>
+<li>update company branding</li>
+<li>manage company contact information</li>
+<li>add hotels</li>
+<li>manage reservations</li>
+<li>manage guests</li>
+<li>manage rooms</li>
+<li>manage hotel properties/content</li>
+<li>grant or revoke staff access</li>
+</ul>
+<h3>Manager</h3>
+<p>Managers have operational access, but not company-level access.</p>
+<p>Managers can:</p>
+<ul>
+<li>use the dashboard</li>
+<li>manage reservations</li>
+<li>manage guest history</li>
+<li>manage rooms</li>
+<li>manage hotel properties/content</li>
+</ul>
+<p>Managers cannot:</p>
+<ul>
+<li>access the <code>Company</code> page</li>
+<li>manage <code>Staff Access</code></li>
+</ul>
+<h3>Front Desk</h3>
+<p>Front desk users are focused on guest arrivals, departures, and live reservation handling.</p>
+<p>Front desk can:</p>
+<ul>
+<li>use the dashboard</li>
+<li>manage reservations</li>
+<li>view guest history</li>
+<li>manage room assignment and room status</li>
+</ul>
+<p>Front desk cannot:</p>
+<ul>
+<li>access the <code>Company</code> page</li>
+<li>access <code>Properties</code></li>
+<li>manage <code>Staff Access</code></li>
+</ul>
+<h2>4. Role Access Table</h2>
+<table>
+<tr><th>Section</th><th>Owner</th><th>Manager</th><th>Front Desk</th></tr>
+<tr><td>Company</td><td>Yes</td><td>No</td><td>No</td></tr>
+<tr><td>Dashboard</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Reservations</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Guests</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Rooms</td><td>Yes</td><td>Yes</td><td>Yes</td></tr>
+<tr><td>Properties</td><td>Yes</td><td>Yes</td><td>No</td></tr>
+<tr><td>Staff Access</td><td>Yes</td><td>No</td><td>No</td></tr>
+</table>
+<h2>5. Logging In</h2>
+<p>Each staff member needs their own login.</p>
+<p>When a user signs in:</p>
+<ul>
+<li>Owners are taken first to the <code>Company</code> page</li>
+<li>Managers and Front Desk users are taken to the <code>Dashboard</code></li>
+</ul>
+<p>The login screen and admin look can be branded with:</p>
+<ul>
+<li>company name</li>
+<li>subtitle</li>
+<li>logo</li>
+<li>primary color</li>
+<li>accent color</li>
+</ul>
+<p>If no company logo has been added yet, the login page will not show one.</p>
+<h2>6. How To Get A User Into The System</h2>
+<p>Before a staff member can be given hotel access, they must already have a valid login account in the authentication system.</p>
+<p>That means there are two steps:</p>
+<ol>
+<li>the user must exist as a login user</li>
+<li>the user must then be granted access to the hotel</li>
+</ol>
+<h3>Recommended Staff Setup Process</h3>
+<ol>
+<li>Create the staff member’s login account</li>
+<li>Confirm the staff member can sign in</li>
+<li>Log in as an <code>Owner</code></li>
+<li>Open <code>Staff Access</code></li>
+<li>Enter the staff email</li>
+<li>Choose the correct role</li>
+<li>Save</li>
+</ol>
+<p>Once this is done, the user will only see the pages allowed for their role.</p>
+<h2>7. Staff Access Management</h2>
+<p>Only Owners can manage staff access.</p>
+<p>The <code>Staff Access</code> page is used to:</p>
+<ul>
+<li>grant access to a hotel</li>
+<li>change a staff member’s role</li>
+<li>revoke access from a hotel</li>
+</ul>
+<h3>To Add A Staff Member</h3>
+<ol>
+<li>Open <code>Staff Access</code></li>
+<li>Enter the user’s email address</li>
+<li>Choose the role:</li>
+</ol>
+<ul>
+<li><code>Owner</code></li>
+<li><code>Manager</code></li>
+<li><code>Front Desk</code></li>
+</ul>
+<ol>
+<li>Click <code>Grant Access</code></li>
+</ol>
+<h3>To Change A Role</h3>
+<p>The easiest method is to grant access again using the same email and a new role. The system will update the role.</p>
+<h3>To Remove Access</h3>
+<p>Use the <code>Remove</code> or revoke action beside that staff member.</p>
+<h2>8. Company Management</h2>
+<p>The <code>Company</code> page is owner-only.</p>
+<p>This page allows the owner to manage the company identity used across the admin dashboard.</p>
+<h3>Owners Can Update</h3>
+<ul>
+<li>company/brand name</li>
+<li>admin subtitle</li>
+<li>logo URL</li>
+<li>primary color</li>
+<li>accent color</li>
+<li>support email</li>
+<li>support phone</li>
+</ul>
+<p>These settings affect:</p>
+<ul>
+<li>the admin shell</li>
+<li>the login page</li>
+<li>the browser tab title</li>
+<li>the overall brand feel of the admin</li>
+</ul>
+<h2>9. Adding A Hotel</h2>
+<p>Owners can also add hotels from the <code>Company</code> page.</p>
+<h3>Hotel Information That Can Be Added</h3>
+<ul>
+<li>hotel name</li>
+<li>short name</li>
+<li>code</li>
+<li>city</li>
+<li>country</li>
+<li>website label</li>
+<li>website URL</li>
+<li>timezone</li>
+<li>description</li>
+<li>contact phone</li>
+<li>contact email</li>
+</ul>
+<p>When a hotel is created, the owner who creates it is automatically attached to that hotel as an Owner.</p>
+<h2>10. Dashboard</h2>
+<p>The dashboard is the operational summary page.</p>
+<p>It is designed to help staff quickly understand what is happening today.</p>
+<p>Typical information shown there includes:</p>
+<ul>
+<li>total reservations</li>
+<li>arrivals today</li>
+<li>unassigned arrivals</li>
+<li>in-house stays</li>
+<li>occupancy snapshot</li>
+<li>recent activity</li>
+<li>upcoming arrivals</li>
+</ul>
+<p>This page is especially useful at shift handover.</p>
+<h2>11. Reservations</h2>
+<p>The <code>Reservations</code> page is the main booking management area.</p>
+<p>This is where staff can:</p>
+<ul>
+<li>view reservations</li>
+<li>filter reservations by status</li>
+<li>add a reservation manually</li>
+<li>edit a reservation</li>
+<li>assign a room</li>
+<li>confirm or cancel a reservation</li>
+<li>check a guest in</li>
+<li>check a guest out</li>
+<li>delete a reservation</li>
+</ul>
+<h2>12. Booking Lifecycle</h2>
+<p>The booking lifecycle is the step-by-step path a reservation follows.</p>
+<p>Current statuses are:</p>
+<ol>
+<li><code>Pending</code></li>
+<li><code>Confirmed</code></li>
+<li><code>Checked In</code></li>
+<li><code>Checked Out</code></li>
+</ol>
+<p>There is also:</p>
+<ul>
+<li><code>Cancelled</code></li>
+</ul>
+<h3>Pending</h3>
+<p>This means the request exists but has not yet been fully accepted into the stay workflow.</p>
+<p>Staff can:</p>
+<ul>
+<li>confirm it</li>
+<li>cancel it</li>
+</ul>
+<h3>Confirmed</h3>
+<p>This means the booking has been accepted and is expected to arrive.</p>
+<p>Staff can:</p>
+<ul>
+<li>assign a room</li>
+<li>check the guest in</li>
+<li>cancel it if needed</li>
+</ul>
+<p>Important note:</p>
+<ul>
+<li>a guest should not be checked in until a room is assigned</li>
+</ul>
+<h3>Checked In</h3>
+<p>This means the guest is currently staying in the hotel.</p>
+<p>Staff can:</p>
+<ul>
+<li>check the guest out</li>
+</ul>
+<h3>Checked Out</h3>
+<p>This means the stay is complete.</p>
+<h3>Cancelled</h3>
+<p>This means the reservation will not continue.</p>
+<h2>13. How To Add A Reservation Manually</h2>
+<p>Use this for:</p>
+<ul>
+<li>phone bookings</li>
+<li>walk-ins</li>
+<li>front desk direct bookings</li>
+</ul>
+<h3>Steps</h3>
+<ol>
+<li>Open <code>Reservations</code></li>
+<li>Click <code>Add Reservation</code></li>
+<li>Enter:</li>
+</ol>
+<ul>
+<li>guest name</li>
+<li>guest email</li>
+<li>guest phone</li>
+<li>source</li>
+<li>status</li>
+<li>room type</li>
+<li>dates</li>
+<li>adults / children</li>
+<li>room count</li>
+<li>nightly rate</li>
+<li>total amount</li>
+<li>notes</li>
+</ul>
+<ol>
+<li>Assign a room if available</li>
+<li>Save the reservation</li>
+</ol>
+<p>If the booking is created as <code>Confirmed</code>, the reservation enters the expected-arrival workflow immediately.</p>
+<h2>14. How Public Booking Requests Are Handled</h2>
+<p>When a booking request comes from the public website, staff should process it from <code>Reservations</code>.</p>
+<h3>Recommended Process</h3>
+<ol>
+<li>Open <code>Reservations</code></li>
+<li>Filter to <code>Pending</code></li>
+<li>Review:</li>
+</ol>
+<ul>
+<li>guest details</li>
+<li>dates</li>
+<li>room type</li>
+<li>number of guests</li>
+<li>notes</li>
+</ul>
+<ol>
+<li>Confirm that space is available</li>
+<li>Assign a room when appropriate</li>
+<li>Click <code>Confirm</code></li>
+</ol>
+<p>If the reservation is confirmed, the system can trigger the guest confirmation email flow.</p>
+<h2>15. How To Assign A Room</h2>
+<p>Room assignment should be done once the correct room is known.</p>
+<h3>Steps</h3>
+<ol>
+<li>Find the reservation</li>
+<li>Use the room assignment control</li>
+<li>Choose the correct room</li>
+<li>Save/update</li>
+</ol>
+<p>Important:</p>
+<ul>
+<li>the room must belong to the same hotel as the reservation</li>
+<li>room assignment should be completed before check-in</li>
+</ul>
+<h2>16. How To Check A Guest In</h2>
+<h3>Steps</h3>
+<ol>
+<li>Open the reservation</li>
+<li>Make sure a room is assigned</li>
+<li>Confirm the guest has arrived</li>
+<li>Click <code>Check In</code></li>
+</ol>
+<p>Once checked in:</p>
+<ul>
+<li>the reservation moves to in-house status</li>
+<li>the room can be tracked against the active stay</li>
+</ul>
+<h2>17. How To Check A Guest Out</h2>
+<h3>Steps</h3>
+<ol>
+<li>Open the reservation</li>
+<li>Confirm departure</li>
+<li>Click <code>Check Out</code></li>
+<li>Update room status and housekeeping in <code>Rooms</code> if needed</li>
+</ol>
+<p>This completes the stay lifecycle.</p>
+<h2>18. Guests</h2>
+<p>The <code>Guests</code> page is the guest history section.</p>
+<p>It helps staff track:</p>
+<ul>
+<li>guest contact information</li>
+<li>number of stays</li>
+<li>total spend</li>
+<li>preferred channel</li>
+<li>notes</li>
+<li>whether the guest currently has an active stay</li>
+</ul>
+<p>This page is useful for:</p>
+<ul>
+<li>repeat guest recognition</li>
+<li>service continuity</li>
+<li>internal notes and guest context</li>
+</ul>
+<h2>19. Rooms</h2>
+<p>The <code>Rooms</code> section manages both:</p>
+<ul>
+<li>room types</li>
+<li>physical room inventory</li>
+</ul>
+<h3>Room Types</h3>
+<p>Room type setup includes:</p>
+<ul>
+<li>code</li>
+<li>title</li>
+<li>description</li>
+<li>hero image</li>
+<li>form image</li>
+<li>gallery images</li>
+<li>size label</li>
+<li>bed label</li>
+<li>best-for label</li>
+<li>rate label</li>
+<li>rate note</li>
+<li>display order</li>
+<li>capacity</li>
+<li>amenities</li>
+<li>active/inactive state</li>
+</ul>
+<h3>Room Inventory</h3>
+<p>Room inventory setup includes:</p>
+<ul>
+<li>room type</li>
+<li>room code</li>
+<li>floor</li>
+<li>occupancy</li>
+<li>status</li>
+<li>housekeeping state</li>
+</ul>
+<h3>Common Room Statuses</h3>
+<ul>
+<li>Available</li>
+<li>Occupied</li>
+<li>Reserved</li>
+<li>Maintenance</li>
+<li>Blocked</li>
+</ul>
+<h3>Common Housekeeping States</h3>
+<ul>
+<li>Clean</li>
+<li>Inspected</li>
+<li>Dirty</li>
+<li>In Progress</li>
+</ul>
+<h2>20. Properties</h2>
+<p>The <code>Properties</code> page is available to Owners and Managers.</p>
+<p>This section is used for hotel-related configuration and content management.</p>
+<p>Front Desk users do not have access to this section.</p>
+<h2>21. Emails And Notifications</h2>
+<p>Some reservation actions can trigger guest email communication.</p>
+<p>Typical examples include:</p>
+<ul>
+<li>reservation confirmed</li>
+<li>reservation cancelled</li>
+</ul>
+<p>The team should still always verify that the booking itself is correct in the dashboard, even when automated email is enabled.</p>
+<h2>22. Daily Operations Workflow</h2>
+<p>Below is a recommended daily operating routine.</p>
+<h3>Start Of Day</h3>
+<ol>
+<li>Open <code>Dashboard</code></li>
+<li>Review:</li>
+</ol>
+<ul>
+<li>arrivals today</li>
+<li>unassigned arrivals</li>
+<li>in-house guests</li>
+<li>recent activity</li>
+</ul>
+<ol>
+<li>Open <code>Reservations</code></li>
+<li>confirm room assignments for arrivals</li>
+</ol>
+<h3>During The Day</h3>
+<ol>
+<li>Handle new bookings</li>
+<li>confirm pending requests</li>
+<li>assign rooms</li>
+<li>check guests in</li>
+<li>update room readiness</li>
+</ol>
+<h3>End Of Day</h3>
+<ol>
+<li>review in-house guests</li>
+<li>check out completed stays</li>
+<li>update housekeeping statuses</li>
+<li>leave notes for the next shift</li>
+</ol>
+<h2>23. Quick Reference By Role</h2>
+<h3>Owner</h3>
+<ul>
+<li>manages company setup</li>
+<li>manages hotel list</li>
+<li>manages staff access</li>
+<li>has full operational visibility</li>
+</ul>
+<h3>Manager</h3>
+<ul>
+<li>oversees reservations, rooms, and guests</li>
+<li>supports hotel setup and day-to-day operations</li>
+<li>does not manage company branding or staff access</li>
+</ul>
+<h3>Front Desk</h3>
+<ul>
+<li>handles live guest operations</li>
+<li>works in reservations, rooms, and guest history</li>
+<li>does not manage staff access or company setup</li>
+</ul>
+<h2>24. Suggested Screenshots To Add</h2>
+<p>If you want this guide turned into a polished client handoff PDF, the best screenshots to add are:</p>
+<ol>
+<li>Login page</li>
+<li>Company page</li>
+<li>Dashboard</li>
+<li>Reservations page</li>
+<li>Add Reservation form</li>
+<li>Rooms page</li>
+<li>Staff Access page</li>
+</ol>
+<h2>25. Quick Start Checklist</h2>
+<h3>Owner Setup Checklist</h3>
+<ol>
+<li>Log in</li>
+<li>Open <code>Company</code></li>
+<li>Add company branding</li>
+<li>Add support email and phone</li>
+<li>Add hotel records</li>
+<li>Grant staff access</li>
+</ol>
+<h3>Reservations Checklist</h3>
+<ol>
+<li>Review pending requests</li>
+<li>Confirm valid bookings</li>
+<li>Assign rooms</li>
+<li>Check in arrivals</li>
+<li>Check out departures</li>
+<li>Keep room statuses current</li>
+</ol>
+<h3>Staff Setup Checklist</h3>
+<ol>
+<li>Make sure the user has a login account</li>
+<li>Open <code>Staff Access</code></li>
+<li>Enter the email</li>
+<li>choose role</li>
+<li>Grant access</li>
+</ol>
+<h2>26. Important Notes</h2>
+<ul>
+<li>Each staff member should have their own login.</li>
+<li>Staff access is hotel-specific.</li>
+<li>A room should be assigned before check-in.</li>
+<li>Owners are the only users who can manage company branding and staff permissions.</li>
+<li>Front Desk users are intentionally limited to daily operational tools only.</li>
+</ul>
+</body></html>

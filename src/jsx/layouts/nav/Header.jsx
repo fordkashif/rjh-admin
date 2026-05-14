@@ -5,6 +5,8 @@ import profile from "../../../assets/images/avatar/pic1.jpg";
 import { ThemeContext } from "../../../context/ThemeContext";
 import { useHotelContext } from "../../../context/HotelContext";
 
+const HELP_GUIDE_PATH = "/help/client-admin-booking-guide.html";
+
 const pageTitles = {
   "": "Dashboard",
   company: "Company",
@@ -66,6 +68,18 @@ const Header = () => {
                   <i id="icon-light" className="fas fa-sun" />
                   <i id="icon-dark" className="fas fa-moon" />
                 </button>
+              </li>
+              <li className="nav-item me-2">
+                <a
+                  href={HELP_GUIDE_PATH}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="rj-help-button"
+                  title="Open admin user guide"
+                >
+                  <i className="fas fa-question-circle" aria-hidden="true" />
+                  <span>Help</span>
+                </a>
               </li>
               <Dropdown as="li" className="nav-item dropdown header-profile">
                 <Dropdown.Toggle variant="" as="a" className="nav-link i-false c-pointer">
